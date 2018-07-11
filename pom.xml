@@ -10,7 +10,7 @@
 	<packaging>jar</packaging>
 
 	<name>Web Platform</name>
-	<description>Web Platform/description>
+	<description>Web Platform</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
