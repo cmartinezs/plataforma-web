@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Login</title>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/sign-in.css}" href="../static/css/sign-in.css" />
+	<script th:src="@{/webjars/jquery/3.1.1-1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
+</head>
+<body class="text-center">
+	<!-- Include _menu.html -->
+	<th:block th:include="/_menu"></th:block>
+
+	<form class="form-signin" name='f'
+		th:action="@{/j_spring_security_check}" method='POST'>
+		<img class="mb-4"
+			src="https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg"
+			alt="" width="72" height="72">
+		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+		<!-- /login?error=true -->
+		<div id="error-login" class="danger"
+			th:if="${#request.getParameter('error') == 'true'}"
+			style="color: red; margin: 10px 0px;">
+			Login Failed!!!<br /> Reason : <span
+				th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
+				th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
+				Static summary </span>
+		</div>
+
+		<label for="inputUser" class="sr-only">User</label> <input type="text"
+			name='username' id="inputUser" class="form-control"
+			placeholder="Email address" required autofocus> <label
+			for="inputPassword" class="sr-only">Password</label> <input
+			type="password" name='password' id="inputPassword"
+			class="form-control" placeholder="Password" required>
+
+		<div class="checkbox mb-3">
+			<label> <input type="checkbox" value="remember-me">
+				Remember me
+			</label>
+		</div>
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
+			in</button>
+		<p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+	</form>
+
+	<div class="form-signin">
+		<br> Username/pass:
+		<ul>
+			<li>dbuser1/123</li>
+			<li>dbadmin1/123</li>
+		</ul>
+	</div>
+</body>
+
+</html>
