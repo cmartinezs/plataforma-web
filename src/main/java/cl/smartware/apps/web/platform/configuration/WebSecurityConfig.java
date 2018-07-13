@@ -49,7 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 		http.csrf().disable();
 		
 		http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
-		http.authorizeRequests().antMatchers("/dashboard").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/dashboard/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/configuration/**").access("hasRole('ROLE_ADMIN')");
 		http.authorizeRequests().antMatchers("/configuration").access("hasRole('ROLE_ADMIN')");
 		
 		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
@@ -61,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 				.failureUrl("/login?error=true")
 				.usernameParameter("username")
 				.passwordParameter("password")
-				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
+				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/logout-success");
 
 		http.authorizeRequests().and()
 				.rememberMe().tokenRepository(persistentTokenRepository())

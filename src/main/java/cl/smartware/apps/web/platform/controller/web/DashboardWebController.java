@@ -30,7 +30,7 @@ public class DashboardWebController
 			{
 				if(roleuser.getRole().getName().equalsIgnoreCase(ERole.ROLE_ADMIN.name()))
 				{
-					template = "admin/dashboard";
+					template = "admin/dashboard-index";
 					break;
 				}
 				else if(roleuser.getRole().getName().equalsIgnoreCase(ERole.ROLE_USER.name()))

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="fragments/head_tag :: head_tag('Dashboard')">
+	<head th:replace="fragments/head_tag :: head_tag('Admin :: Dashboard')">
 		<title>Dashboard</title>
 	</head>
 	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
-		<div th:replace="fragments/menu :: nav('Dashboard')"></div>
+		<div th:replace="fragments/menu :: nav('Admin :: Dashboard')"></div>
 		
 		<div class="content-wrapper">
 			<div class="container-fluid">
 				<ol class="breadcrumb">
 			        <li class="breadcrumb-item">
-		          		<a th:href="@{/dashboard}">Dashboard</a>
+		          		<a th:href="@{/dashboard}">Admin :: Dashboard</a>
 			        </li>
 			        <li class="breadcrumb-item active">Inicio</li>
 		      	</ol>
