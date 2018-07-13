@@ -4,7 +4,8 @@ import org.springframework.stereotype.Service;
 
 import cl.smartware.apps.web.platform.repository.entity.UserEntity;
 
-@Service
+@Component
+@SessionScope
 public class UserLoggedServiceImpl implements UserLoggedService
 {
 	private UserEntity userEntity;
