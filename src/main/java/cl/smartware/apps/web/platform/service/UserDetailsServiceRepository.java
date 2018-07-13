@@ -21,6 +21,9 @@ public class UserDetailsServiceRepository implements UserDetailsService
 {
 	@Autowired
 	private UserEntityCrudRepository userEntityCrudRepository;
+	
+	@Autowired
+	private UserLoggedService userloggedService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
@@ -33,6 +36,8 @@ public class UserDetailsServiceRepository implements UserDetailsService
 			throw new UsernameNotFoundException("User '" + username + "' was not found in the database");
 		}
 
+		userloggedService.setUserEntity(userEntity);
+		
 		System.out.println("Found User: " + userEntity);
 
 		// [ROLE_USER, ROLE_ADMIN,..]

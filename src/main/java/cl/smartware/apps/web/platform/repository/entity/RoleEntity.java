@@ -42,7 +42,7 @@ public class RoleEntity implements EntityBase
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "CREATED_BY")
 	private UserEntity roleCreatedBy;
-	
+
 	@OneToMany(mappedBy = "role")
 	private List<RoleUserEntity> roleUsers = new ArrayList<>();
 
@@ -131,23 +131,6 @@ public class RoleEntity implements EntityBase
 		this.roleCreatedBy = createdBy;
 	}
 
-//	/**
-//	 * @return the users
-//	 */
-//	public List<UserEntity> getUsers()
-//	{
-//		return this.users;
-//	}
-//
-//	/**
-//	 * @param users
-//	 *            the users to set
-//	 */
-//	public void setUsers(List<UserEntity> users)
-//	{
-//		this.users = users;
-//	}
-
 	/**
 	 * @return the roleUsers
 	 */
@@ -157,7 +140,8 @@ public class RoleEntity implements EntityBase
 	}
 
 	/**
-	 * @param roleUsers the roleUsers to set
+	 * @param roleUsers
+	 *            the roleUsers to set
 	 */
 	public void setRoleUsers(List<RoleUserEntity> roleUsers)
 	{
@@ -171,5 +155,10 @@ public class RoleEntity implements EntityBase
 		if (o == null || getClass() != o.getClass()) return false;
 		RoleEntity roleEntity = (RoleEntity) o;
 		return Objects.equals(id, roleEntity.id);
+	}
+
+	public enum ERole
+	{
+		ROLE_ADMIN, ROLE_USER;
 	}
 }

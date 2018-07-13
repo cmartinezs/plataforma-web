@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<!-- Logout Modal-->
+	    <div th:fragment="modal-logout" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+			    <div class="modal-header">
+		      		<h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea salir?</h5>
+		      		<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+		        		<span aria-hidden="true">×</span>
+		      		</button>
+			    </div>
+			    <div class="modal-body">Seleccione "Cerrar sesi&oacute;n" a continuaci&oacute;n si est&aacute; listo para finalizar su sesi&oacute;n actual.</div>
+				    <div class="modal-footer">
+				      <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+				      <a class="btn btn-primary" th:href="@{/logout}">Cerrar sesi&oacute;n</a>
+				    </div>
+				</div>
+	      	</div>
+	    </div>
+	</body>
+</html>
