@@ -1,10 +1,12 @@
 package cl.smartware.apps.web.platform.service;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
 import cl.smartware.apps.web.platform.repository.entity.UserEntity;
 
-@Service
+@Component
+@SessionScope
 public class UserLoggedServiceImpl implements UserLoggedService
 {
 	private UserEntity userEntity;
