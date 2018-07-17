@@ -1,6 +1,6 @@
 INSERT INTO USER (USERNAME, PASSWORD, EMAIL, COMMUNITY_ID, ACTIVE, CREATED_AT, CREATED_BY) VALUES 
-('dbuser1', '$2a$10$bQapoLlIsGGz/cmMoqSA1.tL2/m/999cYDUAAcjsjtF5KZr/Eslz2', 'dbuser1@digitalpanel.com', 1, 1, '2018-06-30 02:39:11', 1),
-('dbadmin1', '$2a$10$bQapoLlIsGGz/cmMoqSA1.tL2/m/999cYDUAAcjsjtF5KZr/Eslz2', 'dbadmin1@digitalpanel.com', 1, 1, '2018-06-30 02:39:11', 1);
+('usuario', '$2a$10$bQapoLlIsGGz/cmMoqSA1.tL2/m/999cYDUAAcjsjtF5KZr/Eslz2', 'usuario@plataforma-web.cl', 1, 1, '2018-06-30 02:39:11', 1),
+('admin', '$2a$10$bQapoLlIsGGz/cmMoqSA1.tL2/m/999cYDUAAcjsjtF5KZr/Eslz2', 'admin@plataforma-web.cl', 1, 1, '2018-06-30 02:39:11', 1);
 
 INSERT INTO ROLE (NAME, ACTIVE, CREATED_AT , CREATED_BY) VALUES
 ('ROLE_ADMIN', 1, '2018-06-30 02:50:48', 1),
