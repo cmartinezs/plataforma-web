@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/head_tag :: head_tag('Dashboard')">
+		<title>Dashboard</title>
+	</head>
+	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+		<div th:replace="fragments/menu :: nav('Dashboard')"></div>
+		
+		<div class="content-wrapper">
+			<div class="container-fluid">
+				<ol class="breadcrumb">
+			        <li class="breadcrumb-item">
+		          		<a th:href="@{/dashboard}">Dashboard</a>
+			        </li>
+			        <li class="breadcrumb-item">
+		          		<a th:href="@{/dashboard/modules}" >M&oacute;dulos</a>
+			        </li>
+			        <li class="breadcrumb-item active" th:text="${moduleTitle}">
+			        	Modulo
+			        </li>
+		      	</ol>
+		      	
+		      	<div class="card mb-3">
+		        	<div class="card-header">
+		          		<i class="fa fa-table"></i>&nbsp;<span th:text="${tableTitle}">Titulo tabla</span>
+		        	</div>
+		        	<div class="card-body">
+		          		<div class="table-responsive">
+		            		<table class="table table-bordered" id="dataTable">
+		              			<thead>
+					                <tr>
+					                  	<th>Nombre base de datos</th>
+					                </tr>
+				              	</thead>
+				              	<tbody>
+				                	<tr th:each="database : ${databases}">
+				                  		<td th:text="${database}">database</td>
+				                	</tr>
+				            	</tbody>
+				     		</table>
+		             	</div>
+		        	</div>
+				</div>
+			</div>
+			
+			<footer class="sticky-footer">
+      			<div class="container">
+        			<div class="text-center">
+          				<small>&copy; Plataforma Web 2018</small>
+        			</div>
+      			</div>
+    		</footer>
+    		
+    		<!-- Scroll to Top Button-->
+    		<a class="scroll-to-top rounded" href="#page-top">
+      			<i class="fa fa-angle-up"></i>
+    		</a>
+		</div>
+		<div th:replace="fragments/modal-logout :: modal-logout"></div>
+		<div th:replace="fragments/footer :: footer"></div>
+	</body>
+</html>
