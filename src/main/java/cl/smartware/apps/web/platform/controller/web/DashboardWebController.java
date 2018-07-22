@@ -1,95 +1,59 @@
 package cl.smartware.apps.web.platform.controller.web;
 
 import java.io.IOException;
-import java.util.List;
+import java.text.MessageFormat;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cl.smartware.apps.web.platform.repository.entity.RoleEntity.ERole;
-import cl.smartware.apps.web.platform.repository.entity.RoleUserEntity;
-import cl.smartware.apps.web.platform.repository.entity.UserEntity;
-import cl.smartware.apps.web.platform.service.MultiDatabaseService;
 import cl.smartware.apps.web.platform.service.UserLoggedService;
-import cl.smartware.apps.web.platform.service.WebPlatformModules;
+import cl.smartware.apps.web.platform.utils.ViewsComponentUtils;
 
 @Controller
 @RequestMapping("/dashboard")
-public class DashboardWebController
+public class DashboardWebController implements ErrorController
 {
+	@Autowired
+	private ViewsComponentUtils viewsComponentUtils;
+	
 	@Autowired
 	private UserLoggedService userLoggedService;
 	
-	@Autowired
-	private MultiDatabaseService multiDatabaseService;
+	private static final Logger LOGGER = LoggerFactory.getLogger(DashboardWebController.class);
 
 	@GetMapping("")
 	public String dashboard()
 	{
-		String template = null;
-
-		UserEntity userEntity = userLoggedService.getUserEntity();
-
-		if (userEntity != null)
-		{
-			for (RoleUserEntity roleuser : userEntity.getRoleUsers())
-			{
-				if (roleuser.getRole().getName().equalsIgnoreCase(ERole.ROLE_ADMIN.name()))
-				{
-					template = "admin/dashboard-index";
-					break;
-				}
-				else if (roleuser.getRole().getName().equalsIgnoreCase(ERole.ROLE_USER.name()))
-				{
-					template = "dashboard-index";
-				}
-			}
-		}
-
-		return template;
+		LOGGER.info(MessageFormat.format("Showing dashboard for the user {0}", userLoggedService.getUserEntity().getUsername()));
+		return viewsComponentUtils.addThemeFolderToView("dashboard-index", userLoggedService.isAdmin());
 	}
-
+	
 	@Secured({ "ROLE_USER" })
 	@GetMapping("/{module}")
 	public void module(@PathVariable("module") String module, HttpServletResponse response) throws IOException
 	{
+		LOGGER.info(MessageFormat.format("Redirecting to the module {0}", module));
 		response.sendRedirect("/dashboard/modules/" + module);
 	}
 	
-	@Secured({ "ROLE_USER" })
-	@GetMapping("/modules")
-	public String modules() throws IOException
+	@RequestMapping("/error")
+	public String handleError()
 	{
-		return "modules";
+		return viewsComponentUtils.addThemeFolderToView("errors/error");
 	}
-	
-	@Secured({ "ROLE_USER" })
-	@GetMapping("/modules/{module}")
-	public String modules(@PathVariable("module") String module, Model model)
+
+	@Override
+	public String getErrorPath()
 	{
-		WebPlatformModules urlModule = WebPlatformModules.valueOf(module.toUpperCase());
-		String moduleName = urlModule.getModuleName();
-		
-		List<String> databases = multiDatabaseService.getDatabasesListFromModule(urlModule);
-		
-		model.addAttribute("databases", databases);
-		model.addAttribute("tableTitle", "Bases de datos en módulo: " + moduleName);
-		model.addAttribute("module", module);
-		model.addAttribute("moduleTitle", moduleName);
-		return "module";
-	}
-	
-	@Secured({ "ROLE_USER" })
-	@GetMapping("/modules/{module}/{database}")
-	public String databases(@PathVariable("module") String module, @PathVariable("databaseName") String databaseName, Model model)
-	{
-		return "module-database";
+		return "/dashboard/error";
 	}
 }

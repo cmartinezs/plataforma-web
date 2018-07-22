@@ -1,14 +1,13 @@
 <!DOCTYPE HTML>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="fragments/head_tag :: head_tag('Login')">
+	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Login')">
 		<title>Login</title>
 	</head>
 	<body class="bg-dark">
 		<div class="container">
 		    <div class="card card-login mx-auto mt-5">
 				<div class="card-header">Ingreso a la plataforma</div>
-				<div id="error-login" class="danger" th:if="${#request.getParameter('error') == 'true'}"
-					style="color: red; margin: 10px 0px;">
+				<div id="error-login" class="danger" th:if="${#request.getParameter('error') == 'true'}" style="color: red; margin: 10px 0px;">
 				 	Ingreso fallido<br /> Motivo: 
 				 	<span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
 						th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
@@ -45,6 +44,6 @@
 				</div>
 			</div>
 		</div>
-		<div th:replace="fragments/footer :: footer"></div>
+		<div th:replace="sb-admin-01/fragments/footer :: footer"></div>
 	</body>
 </html>

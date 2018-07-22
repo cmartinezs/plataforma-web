@@ -7,4 +7,6 @@ public interface UserLoggedService
 	public UserEntity getUserEntity();
 	
 	public void setUserEntity(UserEntity userEntity);
+	
+	public boolean isAdmin();
 }

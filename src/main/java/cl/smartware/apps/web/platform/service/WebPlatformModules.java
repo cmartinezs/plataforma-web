@@ -4,7 +4,8 @@ public enum WebPlatformModules
 {
 	CONTABILIDAD("Contabilidad")
 	, GESTION("Gestión")
-	, REMUNERACION("Remuneración");
+	, REMUNERACION("Remuneración")
+	, UNKNOWN("Desconocido");
 	
 	private String moduleName;
 	

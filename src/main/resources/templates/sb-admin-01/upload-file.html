@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Biblioteca :: Ingreso de documentos')">
+		<title>Ingreso Archivo</title>
+	</head>
+	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+		<div th:replace="sb-admin-01/fragments/menu :: nav('Dashboard')"></div>
+		
+		<div class="content-wrapper">
+			<div class="container-fluid">
+				<ol class="breadcrumb">
+			        <li class="breadcrumb-item">
+		          		<a th:href="@{/dashboard}">Dashboard</a>
+			        </li>
+			        <li class="breadcrumb-item">
+		          		<a th:href="@{/dashboard/modules}" >M&oacute;dulos</a>
+			        </li>
+			        <li class="breadcrumb-item">
+		          		<a th:href="@{/dashboard/modules/library}" >Biblioteca</a>
+			        </li>
+			        <li class="breadcrumb-item active" th:text="${moduleTitle}">
+			        	Modulo
+			        </li>
+		      	</ol>
+		      	
+				<div class="card mx-auto mt-5">
+			      <div class="card-header" th:inline="text">[[${formTitle}]]</div>
+			      <div class="card-body">
+			      	<div th:if="${not #strings.isEmpty(uploadSucces)}" th:text="${uploadSucces}" class="alert alert-success" role="alert">uploadSucces</div>
+			        <form action="#" th:action="@{/dashboard/modules/library/upload-file}" th:object="${fileForm}" method="POST" enctype="multipart/form-data">
+			          <!-- FILENAME -->
+			          <div class="form-group row">
+			            <label for="fileName" class="col-sm-2 col-form-label">Nombre</label>
+			            <div class="col-sm-10">
+					      <input th:field="*{name}" class="form-control" id="fileName" type="text" placeholder="Ingrese el nombre del archivo">
+					    </div>
+					    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger" role="alert">error</div>
+			          </div>
+			          
+			          <!-- FILE -->
+			          <div class="form-group row">
+			            <label for="file" class="col-sm-2 col-form-label">Archivo</label>
+			            <div class="col-sm-10">
+					      <input th:field="*{file}"  class="form-control" id="file" type="file" placeholder="Seleccione un archivo">
+					    </div>
+					    <div th:if="${#fields.hasErrors('file')}" th:errors="*{file}" class="alert alert-danger" role="alert">error</div>
+			          </div>
+			          
+			          <!-- ANIO -->
+			          <div class="form-group row">
+			            <label for="anio" class="col-sm-2 col-form-label">A&ntilde;o</label>
+			            <div class="col-sm-10">
+					      <input th:field="*{anio}"  class="form-control" id="anio" type="text" placeholder="Ingrese el a&ntilde;o" maxlength="4" onkeypress="return isNumberKey(event)">
+					    </div>
+					    <div th:if="${#fields.hasErrors('anio')}" th:errors="*{anio}" class="alert alert-danger" role="alert">error</div>
+			          </div>
+			          
+			          <!-- FILE TYPE -->
+			          <div class="form-group row">
+			            <label for="fileType" class="col-sm-2 col-form-label">Tipo de archivo</label>
+			            <div class="col-sm-10">
+			              <select th:field="*{type}" class="custom-select">
+							<option th:each="fileType: ${fileTypeList}"
+							      th:value="${fileType}"
+							      th:text="${fileType}" >
+						    </option>
+						  </select>
+					    </div>
+					    <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="alert alert-danger" role="alert">error</div>
+			          </div>
+			          
+			          <!-- MANAGEMENT TYPE -->
+			          <div class="form-group row">
+			            <label for="managementType" class="col-sm-2 col-form-label">Tipo de gesti&oacute;n</label>
+			            <div class="col-sm-10">
+					      <select th:field="*{management}" class="custom-select">
+							<option th:each="managementType: ${managementTypeList}"
+							      th:value="${managementType}"
+							      th:text="${managementType}" >
+						    </option>
+						  </select>
+					    </div>
+					    <div th:if="${#fields.hasErrors('management')}" th:errors="*{management}" class="alert alert-danger" role="alert">error</div>
+			          </div>
+			          
+			          <!--ENTERPRISE -->
+			          <div class="form-group row">
+			            <label for="enterprise" class="col-sm-2 col-form-label">Empresa</label>
+			            <div class="col-sm-10">
+					      <input th:field="*{enterprise}" class="form-control" id="enterprise" type="text" placeholder="Ingrese el nombre de la empresa">
+					    </div>
+					    <div th:if="${#fields.hasErrors('enterprise')}" th:errors="*{enterprise}" class="alert alert-danger" role="alert">error</div>
+			          </div>
+			          <button type="submit" class="btn btn-primary">Guardar</button>
+			        </form>
+			      </div>
+				</div>
+			</div>
+			<footer class="sticky-footer">
+      			<div class="container">
+        			<div class="text-center">
+          				<small>&copy; Plataforma Web 2018</small>
+        			</div>
+      			</div>
+    		</footer>
+    		
+    		<!-- Scroll to Top Button-->
+    		<a class="scroll-to-top rounded" href="#page-top">
+      			<i class="fa fa-angle-up"></i>
+    		</a>
+		</div>
+		<div th:replace="sb-admin-01/fragments/modal-logout :: modal-logout"></div>
+		<div th:replace="sb-admin-01/fragments/footer :: footer"></div>
+		<script type="text/javascript" >
+		function isNumberKey(evt)
+		{
+			var charCode = (evt.which) ? evt.which : evt.keyCode;
+			if (charCode != 46 && charCode > 31 
+			&& (charCode < 48 || charCode > 57))
+			return false;
+			return true;
+		}
+		</script>
+	</body>
+</html>

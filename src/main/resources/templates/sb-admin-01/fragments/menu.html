@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<title>MENU</title>
+	</head>
+	<body>
+		<!-- Navigation-->
+  <nav th:fragment="nav(dashboard_text_menu)" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" th:href="@{/}">Plataforma Web</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul sec:authorize="hasRole('ROLE_ADMIN')" class="navbar-nav navbar-sidenav" id="adminAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="${dashboard_text_menu}">
+          <a class="nav-link" th:href="@{/dashboard}">
+            <i class="fa fa-fw fa-dashboard"></i>
+            <span class="nav-link-text" th:text="${dashboard_text_menu}">Dashboard</span>
+          </a>
+        </li>
+	    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Usuarios">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-area-chart"></i>
+            <span class="nav-link-text">Usuarios</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Parametrizaci&oacute;n">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-area-chart"></i>
+            <span class="nav-link-text">Parametrizaci&oacute;n</span>
+          </a>
+        </li>
+      </ul>
+      <ul sec:authorize="hasRole('ROLE_USER')" class="navbar-nav navbar-sidenav" id="userAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="${dashboard_text_menu}">
+          <a class="nav-link" th:href="@{/dashboard}">
+            <i class="fa fa-fw fa-dashboard"></i>
+            <span class="nav-link-text" th:text="${dashboard_text_menu}">Dashboard</span>
+          </a>
+        </li>
+	    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Contabiidad">
+          <a class="nav-link" th:href="@{/dashboard/contabilidad}">
+            <i class="fa fa-fw fa-area-chart"></i>
+            <span class="nav-link-text">Contabilidad</span>
+          </a>
+        </li>
+	    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Gesti&oacute;n">
+          <a class="nav-link" th:href="@{/dashboard/gestion}">
+            <i class="fa fa-fw fa-area-chart"></i>
+            <span class="nav-link-text">Gesti&oacute;n</span>
+          </a>
+        </li>
+	    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Remuneraci&oacute;n">
+          <a class="nav-link" th:href="@{/dashboard/remuneracion}">
+            <i class="fa fa-fw fa-area-chart"></i>
+            <span class="nav-link-text">Remuneraci&oacute;n</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Biblioteca">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseUserBiblioteca" data-parent="#userAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Biblioteca</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseUserBiblioteca">
+            <li>
+              <a th:href="@{/dashboard/modules/library/upload-file}">Ingreso de documentos</a>
+            </li>
+            <li>
+              <a th:href="@{/dashboard/modules/library/search-file}">B&uacute;squeda de documentos</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#logoutModal">
+            <i class="fa fa-fw fa-sign-out"></i>Cerrar sesi&oacute;n</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+	</body>
+</html>
