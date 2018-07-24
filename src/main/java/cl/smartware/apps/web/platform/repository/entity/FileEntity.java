@@ -31,7 +31,7 @@ public class FileEntity implements EntityBase
 	@Column(name = "ID", updatable = false, nullable = false)
 	private Integer id;
 	
-	@Column(name = "NAME", length = 30, nullable = false)
+	@Column(name = "NAME", length = 30, nullable = false, unique = true)
 	private String name;
 	
 	@Column(name = "FILE_NAME", length = 50, nullable = false)
@@ -60,9 +60,6 @@ public class FileEntity implements EntityBase
 	
 	@Column(name = "ENTERPRISE", length = 100, updatable = false, nullable = false)
 	private String enterprise;
-
-	@Column(name = "ACTIVE", nullable = false)
-	private Boolean active = true;
 
 	@Column(name = "CREATED_AT", updatable = false, nullable = false)
 	@CreationTimestamp
@@ -230,22 +227,6 @@ public class FileEntity implements EntityBase
 	public void setEnterprise(String empresa)
 	{
 		this.enterprise = empresa;
-	}
-
-	/**
-	 * @return the active
-	 */
-	public Boolean getActive()
-	{
-		return this.active;
-	}
-
-	/**
-	 * @param active the active to set
-	 */
-	public void setActive(Boolean active)
-	{
-		this.active = active;
 	}
 
 	/**
