@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import cl.smartware.apps.web.platform.controller.web.form.FileForm;
-import cl.smartware.apps.web.platform.repository.crud.FileEntityCrudRepository;
-import cl.smartware.apps.web.platform.repository.entity.FileEntity;
-import cl.smartware.apps.web.platform.repository.entity.enums.FileTypes;
-import cl.smartware.apps.web.platform.repository.entity.enums.ManagementTypes;
-import cl.smartware.apps.web.platform.service.exeption.FileEntityServiceException;
-import cl.smartware.apps.web.platform.service.exeption.FoundRegisterFileEntityServiceException;
+import cl.smartware.apps.web.platform.repository.jpa.crud.FileEntityCrudRepository;
+import cl.smartware.apps.web.platform.repository.jpa.entity.FileEntity;
+import cl.smartware.apps.web.platform.repository.jpa.entity.enums.FileTypes;
+import cl.smartware.apps.web.platform.repository.jpa.entity.enums.ManagementTypes;
+import cl.smartware.apps.web.platform.service.exception.FileEntityServiceException;
+import cl.smartware.apps.web.platform.service.exception.FoundRegisterFileEntityServiceException;
 
 @Service
 public class FileEntityServiceImpl implements FilerEntityService

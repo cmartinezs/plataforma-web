@@ -1,4 +1,4 @@
-package cl.smartware.apps.web.platform.repository.entity;
+package cl.smartware.apps.web.platform.repository.jpa.entity;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

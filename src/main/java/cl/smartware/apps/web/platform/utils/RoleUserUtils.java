@@ -3,7 +3,7 @@ package cl.smartware.apps.web.platform.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import cl.smartware.apps.web.platform.repository.entity.RoleUserEntity;
+import cl.smartware.apps.web.platform.repository.jpa.entity.RoleUserEntity;
 
 public class RoleUserUtils
 {

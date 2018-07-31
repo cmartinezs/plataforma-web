@@ -6,8 +6,8 @@ import javax.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import cl.smartware.apps.web.platform.controller.web.form.validator.ValidFile;
-import cl.smartware.apps.web.platform.repository.entity.enums.FileTypes;
-import cl.smartware.apps.web.platform.repository.entity.enums.ManagementTypes;
+import cl.smartware.apps.web.platform.repository.jpa.entity.enums.FileTypes;
+import cl.smartware.apps.web.platform.repository.jpa.entity.enums.ManagementTypes;
 
 public class FileForm
 {

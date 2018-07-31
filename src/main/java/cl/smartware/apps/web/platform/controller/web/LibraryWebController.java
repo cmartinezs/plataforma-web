@@ -25,12 +25,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cl.smartware.apps.web.platform.controller.web.form.FileForm;
 import cl.smartware.apps.web.platform.controller.web.form.SearchForm;
-import cl.smartware.apps.web.platform.repository.entity.FileEntity;
-import cl.smartware.apps.web.platform.repository.entity.enums.FileTypes;
-import cl.smartware.apps.web.platform.repository.entity.enums.ManagementTypes;
+import cl.smartware.apps.web.platform.repository.jpa.entity.FileEntity;
+import cl.smartware.apps.web.platform.repository.jpa.entity.enums.FileTypes;
+import cl.smartware.apps.web.platform.repository.jpa.entity.enums.ManagementTypes;
 import cl.smartware.apps.web.platform.service.FilerEntityService;
-import cl.smartware.apps.web.platform.service.exeption.FileEntityServiceException;
-import cl.smartware.apps.web.platform.service.exeption.FoundRegisterFileEntityServiceException;
+import cl.smartware.apps.web.platform.service.exception.FileEntityServiceException;
+import cl.smartware.apps.web.platform.service.exception.FoundRegisterFileEntityServiceException;
 import cl.smartware.apps.web.platform.utils.ViewsComponentUtils;
 
 @Controller

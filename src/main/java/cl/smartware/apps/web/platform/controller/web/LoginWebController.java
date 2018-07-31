@@ -1,7 +1,6 @@
 package cl.smartware.apps.web.platform.controller.web;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -53,7 +52,7 @@ public class LoginWebController
 	@GetMapping("/logout-success")
 	public void logoutSuccess(HttpServletResponse response) throws IOException
 	{
-		LOGGER.info(MessageFormat.format("Logout the user {0}", userLoggedService.getUserEntity().getUsername()));
+		LOGGER.info("Logout user");
 		userLoggedService.setUserEntity(null);
 		response.sendRedirect("/login");
 	}

@@ -1,4 +1,4 @@
-package cl.smartware.apps.web.platform.service.exeption;
+package cl.smartware.apps.web.platform.service.exception;
 
 import java.text.MessageFormat;
 

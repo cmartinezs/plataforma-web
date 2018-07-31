@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import cl.smartware.apps.web.platform.repository.crud.UserEntityCrudRepository;
-import cl.smartware.apps.web.platform.repository.entity.UserEntity;
+import cl.smartware.apps.web.platform.repository.jpa.crud.UserEntityCrudRepository;
+import cl.smartware.apps.web.platform.repository.jpa.entity.UserEntity;
 import cl.smartware.apps.web.platform.utils.RoleUserUtils;
 
 @Service

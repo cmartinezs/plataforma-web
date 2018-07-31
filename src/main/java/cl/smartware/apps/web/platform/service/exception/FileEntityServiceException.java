@@ -1,4 +1,4 @@
-package cl.smartware.apps.web.platform.service.exeption;
+package cl.smartware.apps.web.platform.service.exception;
 
 public class FileEntityServiceException extends Exception
 {

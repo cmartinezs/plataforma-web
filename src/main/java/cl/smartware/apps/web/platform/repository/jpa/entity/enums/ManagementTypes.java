@@ -1,4 +1,4 @@
-package cl.smartware.apps.web.platform.repository.entity.enums;
+package cl.smartware.apps.web.platform.repository.jpa.entity.enums;
 
 public enum ManagementTypes
 {

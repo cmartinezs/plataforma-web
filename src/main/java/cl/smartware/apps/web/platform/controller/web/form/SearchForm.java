@@ -1,7 +1,7 @@
 package cl.smartware.apps.web.platform.controller.web.form;
 
-import cl.smartware.apps.web.platform.repository.entity.enums.FileTypes;
-import cl.smartware.apps.web.platform.repository.entity.enums.ManagementTypes;
+import cl.smartware.apps.web.platform.repository.jpa.entity.enums.FileTypes;
+import cl.smartware.apps.web.platform.repository.jpa.entity.enums.ManagementTypes;
 
 public class SearchForm
 {

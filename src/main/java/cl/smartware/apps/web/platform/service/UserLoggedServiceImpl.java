@@ -7,9 +7,9 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-import cl.smartware.apps.web.platform.repository.entity.RoleEntity.ERole;
-import cl.smartware.apps.web.platform.repository.entity.RoleUserEntity;
-import cl.smartware.apps.web.platform.repository.entity.UserEntity;
+import cl.smartware.apps.web.platform.repository.jpa.entity.RoleUserEntity;
+import cl.smartware.apps.web.platform.repository.jpa.entity.UserEntity;
+import cl.smartware.apps.web.platform.repository.jpa.entity.RoleEntity.ERole;
 
 @Component
 @SessionScope

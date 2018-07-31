@@ -1,4 +1,4 @@
-package cl.smartware.apps.web.platform.repository.entity;
+package cl.smartware.apps.web.platform.repository.jpa.entity;
 
 import java.sql.Timestamp;
 
@@ -17,8 +17,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import cl.smartware.apps.web.platform.repository.entity.enums.FileTypes;
-import cl.smartware.apps.web.platform.repository.entity.enums.ManagementTypes;
+import cl.smartware.apps.web.platform.repository.jpa.entity.enums.FileTypes;
+import cl.smartware.apps.web.platform.repository.jpa.entity.enums.ManagementTypes;
 
 @Entity
 @Table(name="file")

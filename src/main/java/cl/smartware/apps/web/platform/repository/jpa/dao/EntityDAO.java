@@ -1,11 +1,11 @@
-package cl.smartware.apps.web.platform.repository.dao;
+package cl.smartware.apps.web.platform.repository.jpa.dao;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import cl.smartware.apps.web.platform.repository.entity.EntityBase;
+import cl.smartware.apps.web.platform.repository.jpa.entity.EntityBase;
 
 public abstract class EntityDAO<E extends EntityBase, K> implements GenericDAO<E, K>
 {

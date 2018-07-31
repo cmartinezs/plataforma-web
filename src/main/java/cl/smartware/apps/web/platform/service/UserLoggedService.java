@@ -1,6 +1,6 @@
 package cl.smartware.apps.web.platform.service;
 
-import cl.smartware.apps.web.platform.repository.entity.UserEntity;
+import cl.smartware.apps.web.platform.repository.jpa.entity.UserEntity;
 
 public interface UserLoggedService
 {

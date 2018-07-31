@@ -12,9 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import cl.smartware.apps.web.platform.repository.dao.RoleEntityDAO;
-import cl.smartware.apps.web.platform.repository.dao.UserEntityDAO;
-import cl.smartware.apps.web.platform.repository.entity.UserEntity;
+import cl.smartware.apps.web.platform.repository.jpa.dao.RoleEntityDAO;
+import cl.smartware.apps.web.platform.repository.jpa.dao.UserEntityDAO;
+import cl.smartware.apps.web.platform.repository.jpa.entity.UserEntity;
 
 @Service
 public class UserDetailsServiceEntity implements UserDetailsService

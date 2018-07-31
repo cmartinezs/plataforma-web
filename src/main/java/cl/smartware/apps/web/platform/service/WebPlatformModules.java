@@ -5,6 +5,7 @@ public enum WebPlatformModules
 	CONTABILIDAD("Contabilidad")
 	, GESTION("Gestión")
 	, REMUNERACION("Remuneración")
+	, TEST_MODULE("Módulo de prueba")
 	, UNKNOWN("Desconocido");
 	
 	private String moduleName;

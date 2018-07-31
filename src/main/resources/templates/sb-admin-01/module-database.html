@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Dashboard :: ' + ${moduleTitle})">
+	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Dashboard' + ${moduleTitle} + ' - ' + ${databaseTitle} )">
 		<title>Dashboard</title>
 	</head>
 	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -15,32 +15,35 @@
 			        <li class="breadcrumb-item">
 		          		<a th:href="@{/dashboard/modules}" >M&oacute;dulos</a>
 			        </li>
-			        <li class="breadcrumb-item active" th:text="${moduleTitle}">
-			        	Modulo
+			        <li class="breadcrumb-item">
+		          		<a th:href="@{/dashboard/modules/} + ${module}" th:text="${moduleTitle}">module</a>
+			        </li>
+			        <li class="breadcrumb-item active" th:text="${databaseTitle}">
+			        	database
 			        </li>
 		      	</ol>
 		      	<div class="card mx-auto mt-5">
 		        	<div class="card-header">
-		          		<i class="fa fa-table"></i>&nbsp;Bases de datos disponibles en el m&oacute;dulo</span>
+		          		<i class="fa fa-table"></i>&nbsp;Tablas disponibles en la base de datos</span>
 		        	</div>
 		        	<div class="card-body">
 			        	<div class="row">
-	       	 				<div th:each="database : ${databases}" class="col-xl-3 col-sm-6 mb-3">
+		       	 			<div th:each="table : ${listOfTables}" class="col-xl-3 col-sm-6 mb-3">
 		       	 				<div class="card">
-								  <div class="card-header" th:text="${database}">
+								  <div class="card-header" th:text="${table}">
 								    Nombre table
 								  </div>
 								  <div class="card-body">
 								    <h5 class="card-title"></h5>
 								    <p class="card-text">Texto descriptivo de la tabla</p>
-								    <a th:href="@{/dashboard/modules/} + ${module} + '/' + ${database}" class="btn btn-primary">Ir</a>
+								    <a th:href="@{/dashboard/modules/} + ${module} + '/' + ${database} + '/' + ${table}" class="btn btn-primary">Ir</a>
 								  </div>
 								</div>
 							</div>
-       	 				</div>
+		       	 		</div>
 		        	</div>
 		        </div>
-		      	
+		      	 
 			</div>
 			
 			<footer class="sticky-footer">

@@ -7,4 +7,6 @@ public interface MultiDatabaseService
 	List<String> getDatabasesListFromModule(String module);
 	
 	public List<String> getDatabasesListFromModule(WebPlatformModules module);
+	
+	public List<String> getTableList(String database);
 }

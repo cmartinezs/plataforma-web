@@ -1,4 +1,4 @@
-package cl.smartware.apps.web.platform.repository.dao;
+package cl.smartware.apps.web.platform.repository.jpa.dao;
 
 import java.io.Serializable;
 import java.util.List;

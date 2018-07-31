@@ -43,6 +43,7 @@ public class ModuleWebController
 	public String modules(@PathVariable("module") String module, Model model)
 	{
 		LOGGER.info(MessageFormat.format("Validating 'path-variable' module {0}", module));
+		
 		WebPlatformModules webPlatformModule = getValidWebPlatformModule(module);
 		
 		String moduleName = webPlatformModule.getModuleName();
@@ -65,8 +66,49 @@ public class ModuleWebController
 			, @PathVariable("database") String database
 			, Model model)
 	{
+		LOGGER.info(MessageFormat.format("Validating 'path-variable' module {0}", module));
+		
+		WebPlatformModules webPlatformModule = getValidWebPlatformModule(module);
+		
+		String moduleName = webPlatformModule.getModuleName();
+		
+		model.addAttribute("module", module);
+		model.addAttribute("moduleTitle", moduleName);
+		model.addAttribute("database", database);
+		model.addAttribute("databaseTitle", database);
+		
+		List<String> listOfTables = multiDatabaseService.getTableList(database);
+		model.addAttribute("listOfTables", listOfTables);
+		
 		return viewsComponentUtils.addThemeFolderToView("module-database");
 	}
+	
+	@Secured({ "ROLE_USER" })
+	@GetMapping("/{module}/{database}/{table}")
+	public String tables(
+			@PathVariable("module") String module
+			, @PathVariable("database") String database
+			, @PathVariable("table") String table
+			, Model model)
+	{
+		LOGGER.info(MessageFormat.format("Validating 'path-variable' module {0}", module));
+		
+		WebPlatformModules webPlatformModule = getValidWebPlatformModule(module);
+		
+		String moduleName = webPlatformModule.getModuleName();
+		
+		model.addAttribute("module", module);
+		model.addAttribute("moduleTitle", moduleName);
+		model.addAttribute("database", database);
+		model.addAttribute("databaseTitle", database);
+		model.addAttribute("tableTitle", table);
+		
+		List<String> listOfTables = multiDatabaseService.getTableList(database);
+		model.addAttribute("listOfTables", listOfTables);
+		
+		return viewsComponentUtils.addThemeFolderToView("module-database-tables");
+	}
+	
 	
 	private WebPlatformModules getValidWebPlatformModule(String module)
 	{

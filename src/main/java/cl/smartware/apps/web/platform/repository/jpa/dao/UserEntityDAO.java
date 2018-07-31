@@ -1,11 +1,11 @@
-package cl.smartware.apps.web.platform.repository.dao;
+package cl.smartware.apps.web.platform.repository.jpa.dao;
 
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
-import cl.smartware.apps.web.platform.repository.entity.UserEntity;
+import cl.smartware.apps.web.platform.repository.jpa.entity.UserEntity;
 
 @Repository
 @Transactional
