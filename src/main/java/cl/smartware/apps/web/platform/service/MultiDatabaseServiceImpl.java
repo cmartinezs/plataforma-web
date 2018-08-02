@@ -23,9 +23,6 @@ public class MultiDatabaseServiceImpl implements MultiDatabaseService
 
 	@Value("#{'${app.databases.remuneracion}'.split(',')}")
 	private List<String> databasesRemuneracion;
-	
-	@Value("#{'${app.databases.plataforma-web}'.split(',')}")
-	private List<String> databasesPlataformaWeb;
 
 	private Map<WebPlatformModules, List<String>> databasesMap;
 	
@@ -39,7 +36,6 @@ public class MultiDatabaseServiceImpl implements MultiDatabaseService
 				.put(WebPlatformModules.CONTABILIDAD, databasesContabilidad)
 				.put(WebPlatformModules.GESTION, databasesGestion)
 				.put(WebPlatformModules.REMUNERACION, databasesRemuneracion)
-				.put(WebPlatformModules.TEST_MODULE, databasesPlataformaWeb)
 				.build();
 	}
 

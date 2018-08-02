@@ -1,0 +1,32 @@
+{"properties": [
+  {
+    "name": "app.folder.theme",
+    "type": "java.lang.String",
+    "description": "A description for 'app.folder.theme'"
+  },
+  {
+    "name": "app.folder.admin",
+    "type": "java.lang.String",
+    "description": "A description for 'app.folder.admin'"
+  },
+  {
+    "name": "app.databases.contabilidad",
+    "type": "java.lang.String",
+    "description": "A description for 'app.databases.contabilidad'"
+  },
+  {
+    "name": "app.databases.gestion",
+    "type": "java.lang.String",
+    "description": "A description for 'app.databases.gestion'"
+  },
+  {
+    "name": "app.databases.remuneracion",
+    "type": "java.lang.String",
+    "description": "A description for 'app.databases.remuneracion'"
+  },
+  {
+    "name": "spring.datasource.jdbcUrl",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.jdbcUrl'"
+  }
+]}
