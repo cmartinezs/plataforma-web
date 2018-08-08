@@ -9,33 +9,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import cl.smartware.apps.web.platform.repository.jdbc.dummy.DummyJDBCRepository;
+import cl.smartware.apps.web.platform.repository.jdbc.WebPlatformJDBCRepository;
 import cl.smartware.apps.web.platform.utils.builders.MapBuilder;
 
 @Service
 public class MultiDatabaseServiceImpl implements MultiDatabaseService
 {
-	@Value("#{'${app.databases.contabilidad}'.split(',')}")
-	private List<String> databasesContabilidad;
+	@Value("#{'${app.databases.contability}'.split(',')}")
+	private List<String> contabilityDatabases;
 
-	@Value("#{'${app.databases.gestion}'.split(',')}")
-	private List<String> databasesGestion;
+	@Value("#{'${app.databases.management}'.split(',')}")
+	private List<String> managementDatabases;
 
-	@Value("#{'${app.databases.remuneracion}'.split(',')}")
-	private List<String> databasesRemuneracion;
+	@Value("#{'${app.databases.remuneration}'.split(',')}")
+	private List<String> remunerationDatabases;
 
 	private Map<WebPlatformModules, List<String>> databasesMap;
 	
 	@Autowired
-	private DummyJDBCRepository dummyJDBCRepository;
+	private WebPlatformJDBCRepository webPlatformJDBCRepository;
 
 	@PostConstruct
 	private void init()
 	{
 		databasesMap = MapBuilder.<WebPlatformModules, List<String>>unordered()
-				.put(WebPlatformModules.CONTABILIDAD, databasesContabilidad)
-				.put(WebPlatformModules.GESTION, databasesGestion)
-				.put(WebPlatformModules.REMUNERACION, databasesRemuneracion)
+				.put(WebPlatformModules.CONTABILITY, contabilityDatabases)
+				.put(WebPlatformModules.MANAGEMENT, managementDatabases)
+				.put(WebPlatformModules.REMUNERATION, remunerationDatabases)
 				.build();
 	}
 
@@ -52,6 +52,16 @@ public class MultiDatabaseServiceImpl implements MultiDatabaseService
 
 	@Override
 	public List<String> getTableList(String database) {
-		return dummyJDBCRepository.listOfTables();
+		return webPlatformJDBCRepository.listOfTables(database);
+	}
+
+	@Override
+	public List<Map<String, Object>> getRegistres(String database, String tableName) {
+		return webPlatformJDBCRepository.getAllRegistresFromTable(database, tableName);
+	}
+
+	@Override
+	public List<String> getColumns(String database, String table) {
+		return webPlatformJDBCRepository.getColumns(database, table);
 	}
 }

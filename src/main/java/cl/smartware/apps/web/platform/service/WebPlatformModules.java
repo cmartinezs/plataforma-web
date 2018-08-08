@@ -2,10 +2,9 @@ package cl.smartware.apps.web.platform.service;
 
 public enum WebPlatformModules
 {
-	CONTABILIDAD("Contabilidad")
-	, GESTION("Gestión")
-	, REMUNERACION("Remuneración")
-	, TEST_MODULE("Módulo de prueba")
+	CONTABILITY("Contabilidad")
+	, MANAGEMENT("Gestión")
+	, REMUNERATION("Remuneración")
 	, UNKNOWN("Desconocido");
 	
 	private String moduleName;

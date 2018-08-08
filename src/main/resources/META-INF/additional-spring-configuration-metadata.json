@@ -28,5 +28,20 @@
     "name": "spring.datasource.jdbcUrl",
     "type": "java.lang.String",
     "description": "A description for 'spring.datasource.jdbcUrl'"
+  },
+  {
+    "name": "app.databases.contability",
+    "type": "java.lang.String",
+    "description": "A description for 'app.databases.contability'"
+  },
+  {
+    "name": "app.databases.management",
+    "type": "java.lang.String",
+    "description": "A description for 'app.databases.management'"
+  },
+  {
+    "name": "app.databases.remuneration",
+    "type": "java.lang.String",
+    "description": "A description for 'app.databases.remuneration'"
   }
 ]}

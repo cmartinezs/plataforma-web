@@ -28,22 +28,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(entityManagerFactoryRef = "entityManagerFactory", basePackages = { "cl.smartware.apps.web.platform.repository.jpa" })
-public class WebPlatformDatabaseConfig {
-	/*
-	 * @Bean
-	 * 
-	 * @Qualifier("dummyDS")
-	 * 
-	 * @ConfigurationProperties(prefix = "dummy.datasource") DataSource dummyDS() {
-	 * return DataSourceBuilder.create().build(); }
-	 * 
-	 * @Bean
-	 * 
-	 * @Qualifier("dummyJdbcTemplate") JdbcTemplate
-	 * dummyJdbcTemplate(@Qualifier("dummyDS") DataSource dummyDS) { return new
-	 * JdbcTemplate(dummyDS); }
-	 */
-
+public class WebPlatformDatabaseConfig
+{
 	@Primary
 	@Bean(name = "webPlataformDS")
 	@ConfigurationProperties(prefix = "spring.datasource")

@@ -27,25 +27,43 @@
 		      	</ol>
 		      	<div class="card mx-auto mt-5">
 		        	<div class="card-header">
-		          		<i class="fa fa-table"></i>&nbsp;Registros de la tabla</span>
+		          		<i class="fa fa-table"></i>&nbsp;Registros de la tabla
 		        	</div>
 		        	<div class="card-body">
-		        	</div>
-		        </div>
-			</div>
+		        		<div class="table-responsive">
+		            		<table class="table table-bordered" id="dataTable">
+		              			<thead>
+					                <tr>
+						                <th:block th:each="columnName: ${tableColumnNames}">
+						                  	<th th:text="${columnName}">Nombre de columna</th>
+						                </th:block>
+					                </tr>
+				              	</thead>
+				              	<tbody>
+				                	<tr th:each="row : ${tableRows}">
+					                	<th:block th:each="entry : ${row}">
+							                <td th:text="${entry.value}">valor del campo en la fila</td>
+							            </th:block>
+				                	</tr>
+				            	</tbody>
+			     			</table>
+		        		</div>
+			        </div>
+				</div>
 			
-			<footer class="sticky-footer">
-      			<div class="container">
-        			<div class="text-center">
-          				<small>&copy; Plataforma Web 2018</small>
-        			</div>
-      			</div>
-    		</footer>
-    		
-    		<!-- Scroll to Top Button-->
-    		<a class="scroll-to-top rounded" href="#page-top">
-      			<i class="fa fa-angle-up"></i>
-    		</a>
+				<footer class="sticky-footer">
+	      			<div class="container">
+	        			<div class="text-center">
+	          				<small>&copy; Plataforma Web 2018</small>
+	        			</div>
+	      			</div>
+	    		</footer>
+	    		
+	    		<!-- Scroll to Top Button-->
+	    		<a class="scroll-to-top rounded" href="#page-top">
+	      			<i class="fa fa-angle-up"></i>
+	    		</a>
+			</div>
 		</div>
 		<div th:replace="sb-admin-01/fragments/modal-logout :: modal-logout"></div>
 		<div th:replace="sb-admin-01/fragments/footer :: footer"></div>

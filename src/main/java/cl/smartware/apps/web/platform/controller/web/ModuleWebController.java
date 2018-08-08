@@ -2,7 +2,9 @@ package cl.smartware.apps.web.platform.controller.web;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,6 +105,28 @@ public class ModuleWebController
 		model.addAttribute("databaseTitle", database);
 		model.addAttribute("tableTitle", table);
 		
+		List<Map<String, Object>> tableRows = multiDatabaseService.getRegistres(database, table);
+		
+		List<String> tableColumnNames = null;
+		
+		if(!tableRows.isEmpty())
+		{
+			List<String> columnNames = new ArrayList<>();
+			
+			tableRows.get(0).keySet().forEach(key -> {
+				columnNames.add(key);
+			});
+			
+			tableColumnNames = columnNames;
+		}
+		else
+		{
+			tableColumnNames = multiDatabaseService.getColumns(database, table);
+		}
+		
+		model.addAttribute("tableColumnNames", tableColumnNames);
+		model.addAttribute("tableRows", tableRows);
+		
 		List<String> listOfTables = multiDatabaseService.getTableList(database);
 		model.addAttribute("listOfTables", listOfTables);
 		
@@ -120,7 +144,7 @@ public class ModuleWebController
 		}
 		catch (IllegalArgumentException e)
 		{
-			LOGGER.warn(MessageFormat.format("Unknown module '{0}'", module));
+			LOGGER.warn(MessageFormat.format("Unknown module {0}", module));
 			webPlatformModule = WebPlatformModules.UNKNOWN;
 		}
 		catch (NullPointerException e)
