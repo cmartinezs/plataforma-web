@@ -75,7 +75,7 @@
 			              <select th:field="*{type}" class="custom-select">
 							<option th:each="fileType: ${fileTypeList}"
 							      th:value="${fileType}"
-							      th:text="${fileType}" >
+							      th:text="${fileType.text}" >
 						    </option>
 						  </select>
 					    </div>
@@ -93,7 +93,7 @@
 					      <select th:field="*{management}" class="custom-select">
 							<option th:each="managementType: ${managementTypeList}"
 							      th:value="${managementType}"
-							      th:text="${managementType}" >
+							      th:text="${managementType.value}" >
 						    </option>
 						  </select>
 					    </div>
@@ -116,7 +116,7 @@
 							<div class="form-control alert alert-danger" id="enterpriseError" th:errors="*{enterprise}"></div>
 						</div>
 			          </div>
-			          <button type="submit" class="btn btn-primary">Guardar</button>
+			          <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Guardar</button>
 			        </form>
 			      </div>
 				</div>

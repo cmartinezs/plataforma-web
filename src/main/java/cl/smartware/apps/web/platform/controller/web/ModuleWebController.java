@@ -2,22 +2,29 @@ package cl.smartware.apps.web.platform.controller.web;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.itextpdf.text.DocumentException;
+
 import cl.smartware.apps.web.platform.service.MultiDatabaseService;
 import cl.smartware.apps.web.platform.service.WebPlatformModules;
+import cl.smartware.apps.web.platform.service.export.ExportFileService;
+import cl.smartware.apps.web.platform.service.export.model.FileExport;
+import cl.smartware.apps.web.platform.utils.ListUtils;
 import cl.smartware.apps.web.platform.utils.ViewsComponentUtils;
 
 @Controller
@@ -29,6 +36,9 @@ public class ModuleWebController
 	
 	@Autowired
 	private MultiDatabaseService multiDatabaseService;
+	
+	@Autowired
+	private ExportFileService exportFileService;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ModuleWebController.class);
 	
@@ -91,8 +101,10 @@ public class ModuleWebController
 			@PathVariable("module") String module
 			, @PathVariable("database") String database
 			, @PathVariable("table") String table
-			, Model model)
+			, ModelMap model)
 	{
+		model.remove("export");
+		
 		LOGGER.info(MessageFormat.format("Validating 'path-variable' module {0}", module));
 		
 		WebPlatformModules webPlatformModule = getValidWebPlatformModule(module);
@@ -105,19 +117,14 @@ public class ModuleWebController
 		model.addAttribute("databaseTitle", database);
 		model.addAttribute("tableTitle", table);
 		
-		List<Map<String, Object>> tableRows = multiDatabaseService.getRegistres(database, table);
+		List<Map<String, Object>> tableRows = multiDatabaseService.getRows(database, table);
 		
 		List<String> tableColumnNames = null;
 		
 		if(!tableRows.isEmpty())
 		{
-			List<String> columnNames = new ArrayList<>();
-			
-			tableRows.get(0).keySet().forEach(key -> {
-				columnNames.add(key);
-			});
-			
-			tableColumnNames = columnNames;
+			tableColumnNames = ListUtils.setToList(tableRows.get(0).keySet());
+			model.addAttribute("export", "export");
 		}
 		else
 		{
@@ -127,10 +134,46 @@ public class ModuleWebController
 		model.addAttribute("tableColumnNames", tableColumnNames);
 		model.addAttribute("tableRows", tableRows);
 		
-		List<String> listOfTables = multiDatabaseService.getTableList(database);
-		model.addAttribute("listOfTables", listOfTables);
-		
 		return viewsComponentUtils.addThemeFolderToView("module-database-tables");
+	}
+	
+	@Secured({ "ROLE_USER" })
+	@GetMapping("/{module}/{database}/{table}/{ext}")
+	public ResponseEntity<ByteArrayResource>  export(
+			@PathVariable("module") String module
+			, @PathVariable("database") String database
+			, @PathVariable("table") String table
+			, @PathVariable("ext") String ext)
+	{
+		LOGGER.info(MessageFormat.format("Validating 'path-variable' module {0}", module));
+		
+		WebPlatformModules webPlatformModule = getValidWebPlatformModule(module);
+		
+		try 
+		{
+			FileExport file = exportFileService.generateFileToExport(module, database, table, ext);
+			
+			String filename = file.getFileName();
+			String contentType = file.getContentType();
+			long contentLength = file.getContentLength();
+			byte[] byteArray = file.getBytes();
+			
+			return exportFileService.getDownloadResponse(filename, contentType, contentLength, byteArray);
+		} 
+		catch (DocumentException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			return ResponseEntity.notFound().build();
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			return ResponseEntity.notFound().build();
+		}
 	}
 	
 	

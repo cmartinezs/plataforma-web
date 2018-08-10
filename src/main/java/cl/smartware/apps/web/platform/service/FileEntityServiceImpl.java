@@ -72,7 +72,7 @@ public class FileEntityServiceImpl implements FilerEntityService
 		}
 		catch (IOException e)
 		{
-			String msg = MessageFormat.format("Error to get bytes from uploaded file {}", file.getOriginalFilename());
+			String msg = MessageFormat.format("Error to get bytes from uploaded file {0}", file.getOriginalFilename());
 			LOGGER.error(msg, e);
 			throw new FileEntityServiceException(msg, e);
 		}
@@ -88,8 +88,7 @@ public class FileEntityServiceImpl implements FilerEntityService
 	public List<FileEntity> findByNameOrAnioOrTypeOrManagementOrEnterprise(String name, Integer anio, FileTypes type,
 			ManagementTypes management, String enterprise)
 	{
-		return fileEntityCrudRepository.findByNameOrAnioOrTypeOrManagementOrEnterprise(name, anio, type, management,
-				enterprise);
+		return fileEntityCrudRepository.findByNameOrAnioOrTypeOrManagementOrEnterprise(name, anio, type, management, enterprise);
 	}
 
 	@Override

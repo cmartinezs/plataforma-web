@@ -2,30 +2,17 @@ package cl.smartware.apps.web.platform.repository.jpa.entity.enums;
 
 public enum ManagementTypes
 {
-	CONTABLE("Contable"), RRHH("Recursos Humanos (RRHH)"), TESORERIA("Tesorería");
+	SELECT("-- Seleccione --"), CONTABLE("Contable"), RRHH("Recursos Humanos (RRHH)"), TESORERIA("Tesorería");
 	
 	private String value;
 	
-	ManagementTypes(String name)
+	ManagementTypes(String value)
 	{
-		this.value = name;
+		this.value = value;
 	}
 
-	/**
-	 * @return the value
-	 */
-	public String getName()
+	public String getValue()
 	{
 		return this.value;
 	}
-
-	/**
-	 * @param value the value to set
-	 */
-	public void setName(String name)
-	{
-		this.value = name;
-	}
-	
-	
 }

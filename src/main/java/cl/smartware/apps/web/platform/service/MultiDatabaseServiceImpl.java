@@ -56,7 +56,7 @@ public class MultiDatabaseServiceImpl implements MultiDatabaseService
 	}
 
 	@Override
-	public List<Map<String, Object>> getRegistres(String database, String tableName) {
+	public List<Map<String, Object>> getRows(String database, String tableName) {
 		return webPlatformJDBCRepository.getAllRegistresFromTable(database, tableName);
 	}
 

@@ -9,8 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -31,6 +29,7 @@ import cl.smartware.apps.web.platform.repository.jpa.entity.enums.ManagementType
 import cl.smartware.apps.web.platform.service.FilerEntityService;
 import cl.smartware.apps.web.platform.service.exception.FileEntityServiceException;
 import cl.smartware.apps.web.platform.service.exception.FoundRegisterFileEntityServiceException;
+import cl.smartware.apps.web.platform.service.export.ExportFileService;
 import cl.smartware.apps.web.platform.utils.ViewsComponentUtils;
 
 @Controller
@@ -42,6 +41,9 @@ public class LibraryWebController
 
 	@Autowired
 	private FilerEntityService filerEntityService;
+	
+	@Autowired
+	private ExportFileService exportFileService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LibraryWebController.class);
 
@@ -135,15 +137,7 @@ public class LibraryWebController
 
 		if (optionalFileEntity.isPresent())
 		{
-			FileEntity fileEntity = optionalFileEntity.get();
-
-			ByteArrayResource resource = new ByteArrayResource(fileEntity.getFile());
-
-			return ResponseEntity.ok()
-					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileEntity.getFileName())
-					.contentType(MediaType.parseMediaType(fileEntity.getContentType()))
-					.contentLength(fileEntity.getSize())
-					.body(resource);
+			return exportFileService.getDownloadResponse(optionalFileEntity.get());
 		}
 		else
 		{

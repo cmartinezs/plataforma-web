@@ -88,6 +88,16 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.13</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.17</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -135,7 +145,9 @@ java -jar -Dfile.encoding=UTF-8 ${project.build.finalName}.jar
 										<include name="exec.cmd" />
 									</fileset>
 								</copy>
-								<zip destfile="${basedir}/dist/${project.build.finalName}.zip" basedir="${basedir}/dist" excludes="dont*.*"/>
+								<zip
+									destfile="${basedir}/dist/${project.build.finalName}.zip"
+									basedir="${basedir}/dist" excludes="dont*.*" />
 							</target>
 						</configuration>
 						<goals>

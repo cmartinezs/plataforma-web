@@ -11,7 +11,7 @@ public interface MultiDatabaseService
 	
 	public List<String> getTableList(String database);
 
-	public List<Map<String, Object>> getRegistres(String database, String table);
+	public List<Map<String, Object>> getRows(String database, String table);
 
 	public List<String> getColumns(String database, String table);
 }
