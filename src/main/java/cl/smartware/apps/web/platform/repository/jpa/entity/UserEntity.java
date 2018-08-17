@@ -2,6 +2,7 @@ package cl.smartware.apps.web.platform.repository.jpa.entity;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,10 +36,10 @@ public class UserEntity implements EntityBase
 	@Column(name = "PASSWORD", length = 60, nullable = false)
 	private String password;
 
-	@Column(name = "EMAIL", length = 100, nullable = false)
+	@Column(name = "EMAIL", length = 100, nullable = true)
 	private String email;
 
-	@Column(name = "COMMUNITY_ID", nullable = false)
+	@Column(name = "COMMUNITY_ID", nullable = true)
 	private Integer communityId;
 
 	@Column(name = "ACTIVE", nullable = false)
@@ -46,19 +47,19 @@ public class UserEntity implements EntityBase
 
 	@Column(name = "CREATED_AT", updatable = false, nullable = false)
 	@CreationTimestamp
-	private Timestamp createdAt;
+	private Timestamp createdAt = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "CREATED_BY")
 	private UserEntity userCreatedBy;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
 	private List<RoleUserEntity> roleUsers = new ArrayList<>();
 
-	@OneToMany(mappedBy = "roleCreatedBy")
+	@OneToMany(mappedBy = "roleCreatedBy", orphanRemoval = true)
 	private List<RoleEntity> createdRoles = new ArrayList<>();
 
-	@OneToMany(mappedBy = "userCreatedBy")
+	@OneToMany(mappedBy = "userCreatedBy", orphanRemoval = true)
 	private List<UserEntity> createdUsers = new ArrayList<>();
 
 	/**
@@ -223,23 +224,6 @@ public class UserEntity implements EntityBase
 	}
 
 	/**
-	 * @return the userCreatedBy
-	 */
-	public UserEntity getUserCreatedBy()
-	{
-		return this.userCreatedBy;
-	}
-
-	/**
-	 * @param userCreatedBy
-	 *            the userCreatedBy to set
-	 */
-	public void setUserCreatedBy(UserEntity userCreatedBy)
-	{
-		this.userCreatedBy = userCreatedBy;
-	}
-
-	/**
 	 * @return the roleUsers
 	 */
 	public List<RoleUserEntity> getRoleUsers()
@@ -280,6 +264,12 @@ public class UserEntity implements EntityBase
 	public void setCreatedUsers(List<UserEntity> createdUsers)
 	{
 		this.createdUsers = createdUsers;
+	}
+	
+	public UserEntity removeRoleUser(RoleUserEntity roleUserEntity)
+	{
+		this.roleUsers.remove(roleUserEntity);
+		return this;
 	}
 
 	@Override

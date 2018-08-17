@@ -19,9 +19,9 @@ import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.jdbc.support.MetaDataAccessException;
 import org.springframework.stereotype.Repository;
 
-import cl.smartware.apps.web.platform.configuration.databases.ContabillityProperties;
-import cl.smartware.apps.web.platform.configuration.databases.ManagementProperties;
-import cl.smartware.apps.web.platform.configuration.databases.RemunerationProperties;
+import cl.smartware.apps.web.platform.configuration.databases.jdbc.ContabillityProperties;
+import cl.smartware.apps.web.platform.configuration.databases.jdbc.ManagementProperties;
+import cl.smartware.apps.web.platform.configuration.databases.jdbc.RemunerationProperties;
 
 @Repository
 public class WebPlatformJDBCRepositoryImpl implements WebPlatformJDBCRepository 

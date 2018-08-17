@@ -1,11 +1,13 @@
 package cl.smartware.apps.web.platform.controller.web.form;
 
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import cl.smartware.apps.web.platform.controller.web.form.validator.ValidFile;
+import cl.smartware.apps.web.platform.controller.web.form.validator.file.ValidFile;
 import cl.smartware.apps.web.platform.repository.jpa.entity.enums.FileTypes;
 import cl.smartware.apps.web.platform.repository.jpa.entity.enums.ManagementTypes;
 
@@ -13,13 +15,15 @@ public class FileForm
 {
 	@NotNull(message = "Debe ingresar un nombre")
 	@NotBlank(message = "Debe ingresar un nombre")
+	@Size(max = 50, message = "El largo del nombre no debe superar los 50 caracteres")
 	private String name;
 	
 	@NotNull(message = "Debe seleccionar un archivo")
-	@ValidFile(maxSize = 5242880) //5Mb
+	@ValidFile(maxSize = 5242880, contentType = { "application/pdf", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}) //5Mb
     private MultipartFile file;
 	
 	@NotNull(message = "Debe ingresar un año")
+	@Digits(integer = 4, fraction = 0,  message = "El largo del año debe ser de 4 digitos")
 	private Integer anio;
 	
 	@NotNull(message = "Debe seleccionar un tipo de archivo")

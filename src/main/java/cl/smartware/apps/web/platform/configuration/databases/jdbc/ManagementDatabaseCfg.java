@@ -1,4 +1,4 @@
-package cl.smartware.apps.web.platform.configuration.databases;
+package cl.smartware.apps.web.platform.configuration.databases.jdbc;
 
 import javax.sql.DataSource;
 

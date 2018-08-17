@@ -13,15 +13,15 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul sec:authorize="hasRole('ROLE_ADMIN')" class="navbar-nav navbar-sidenav" id="adminAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="${dashboard_text_menu}">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" th:title="${dashboard_text_menu}">
           <a class="nav-link" th:href="@{/dashboard}">
             <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text" th:text="${dashboard_text_menu}">Dashboard</span>
+            <span class="nav-link-text" th:text="${dashboard_text_menu}">Dashboard ASD</span>
           </a>
         </li>
 	    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Usuarios">
-          <a class="nav-link" href="#">
-            <i class="fa fa-fw fa-area-chart"></i>
+          <a class="nav-link" th:href="@{/dashboard/users}">
+            <i class="fa fa-fw fa-users"></i>
             <span class="nav-link-text">Usuarios</span>
           </a>
         </li>
@@ -41,33 +41,33 @@
         </li>
 	      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Contabiidad">
           <a class="nav-link" th:href="@{/dashboard/contability}">
-            <i class="fa fa-fw fa-area-chart"></i>
+            <i class="fa fa-fw fa-usd"></i>
             <span class="nav-link-text">Contabilidad</span>
           </a>
         </li>
 	      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Gesti&oacute;n">
           <a class="nav-link" th:href="@{/dashboard/management}">
-            <i class="fa fa-fw fa-area-chart"></i>
+            <i class="fa fa-fw fa-folder"></i>
             <span class="nav-link-text">Gesti&oacute;n</span>
           </a>
         </li>
 	      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Remuneraci&oacute;n">
           <a class="nav-link" th:href="@{/dashboard/remuneration}">
-            <i class="fa fa-fw fa-area-chart"></i>
+            <i class="fa fa-fw fa-legal"></i>
             <span class="nav-link-text">Remuneraci&oacute;n</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Biblioteca">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseUserBiblioteca" data-parent="#userAccordion">
-            <i class="fa fa-fw fa-wrench"></i>
+            <i class="fa fa-fw fa-book"></i>
             <span class="nav-link-text">Biblioteca</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseUserBiblioteca">
             <li>
-              <a th:href="@{/dashboard/modules/library/upload-file}">Ingreso de documentos</a>
+              <a th:href="@{/dashboard/modules/library/upload-file}"><i class="fa fa-upload"></i>&nbsp;Ingreso de documentos</a>
             </li>
             <li>
-              <a th:href="@{/dashboard/modules/library/search-file}">B&uacute;squeda de documentos</a>
+              <a th:href="@{/dashboard/modules/library/search-file}"><i class="fa fa-search"></i>&nbsp;B&uacute;squeda de documentos</a>
             </li>
           </ul>
         </li>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Admin :: Dashboard :: Usuario ' + ${userTitle})">
+		<title>Ingreso Archivo</title>
+	</head>
+	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+		<div th:replace="sb-admin-01/fragments/menu :: nav('Dashboard')"></div>
+		
+		<div class="content-wrapper">
+			<div class="container-fluid">
+				<ol class="breadcrumb">
+			        <li class="breadcrumb-item">
+		          		<a th:href="@{/dashboard}">Admin :: Dashboard</a>
+			        </li>
+			        <li class="breadcrumb-item">
+		          		<a th:href="@{/dashboard/users}">
+		          			<i class="fa fa-users"></i>&nbsp;Usuarios
+		          		</a>
+			        </li>
+			        <li class="breadcrumb-item active">
+			        	<i class="fa fa-user"></i>&nbsp;
+			        	<span th:text="${userTitle}" th:remove="tag">Usuario</span>
+			        </li>
+		      	</ol>
+		      	<form action="#" th:action="@{/dashboard/users/save}" th:object="${userForm}" method="POST">
+				<div class="card mx-auto mt-5">
+			      <div class="card-header" th:inline="text">
+			      	<th:block th:if="${not isEdit}">
+			      		<i class="fa fa-eye"></i>&nbsp;
+			      	</th:block>
+			      	<th:block th:if="${isEdit and isNew}">
+			      		<i class="fa fa-user-plus"></i>&nbsp;
+			      	</th:block>
+			      	<th:block th:if="${not isNew}">
+			      		<i class="fa fa-edit"></i>&nbsp;
+			      	</th:block>
+			      	[[${formTitle}]]
+			      </div>
+			      <div class="card-body">
+			      	<div th:if="${not #strings.isEmpty(editSuccess)}" th:text="${editSuccess}" class="alert alert-success" role="alert">editSucces</div>
+			      	<div th:if="${not #strings.isEmpty(editError)}" th:text="${editError}" class="alert alert-danger" role="alert">editError</div>
+			      	<div th:if="${not #strings.isEmpty(advertice)}" th:text="${advertice}" class="alert alert-warning" role="alert">advertice</div>
+			        
+			        
+			        	<div th:if="${#fields.hasErrors('global')}" class="alert alert-danger" id="globarlErrors" th:errors="*{global}"></div>
+			        	<input th:field="*{id}" id="id" type="hidden" th:rendered="${not isEdit}">
+			          <!-- USERNAME -->
+			          <div class="form-group row">
+			            <label for="username" class="col-sm-2 col-form-label">Nombre de usuario</label>
+			            <div class="col-sm-10">
+					      <input th:field="*{username}" class="form-control" id="username" type="text" maxlength="30" placeholder="Ingrese un nombre de usuario" th:disabled="${not isEdit}"/>
+					    </div>
+					    <div th:if="${#fields.hasErrors('username')}" class="w-100"></div>
+					    <div th:if="${#fields.hasErrors('username')}" class="col-sm-2" role="alert"></div>
+					    <div th:if="${#fields.hasErrors('username')}" class="col-sm-10">
+							<div class="form-control alert alert-danger" id="usernameError" th:errors="*{username}"></div>
+						</div>
+			          </div>
+			          
+			          <th:block th:if="${isEdit}">
+			          <!-- PASSWORD -->
+			          <div class="form-group row">
+			            <label for="password" class="col-sm-2 col-form-label">Contrase&ntilde;a</label>
+			            <div class="col-sm-10">
+					      <input th:field="*{password}"  class="form-control" id="password" type="password" maxlength="15" placeholder="Ingrese contrase&ntilde;a"/>
+					    </div>
+					    <div th:if="${#fields.hasErrors('password')}" class="w-100"></div>
+					    <div th:if="${#fields.hasErrors('password')}" class="col-sm-2"></div>
+					    <div th:if="${#fields.hasErrors('password')}" class="col-sm-10">
+							<div class="form-control alert alert-danger" id="passwordError" th:errors="*{password}"></div>
+						</div>
+			          </div>
+			          
+			          <!-- CONFIRM PASSWORD -->
+			          <div class="form-group row">
+			            <label for="confirmPassword" class="col-sm-2 col-form-label">Confirme contrase&ntilde;a</label>
+			            <div class="col-sm-10">
+					      <input th:field="*{confirmPassword}"  class="form-control" id="confirmPassword" type="password" maxlength="15" placeholder="Confirme contrase&ntilde;a"/>
+					    </div>
+					    <div th:if="${#fields.hasErrors('confirmPassword')}" class="w-100"></div>
+					    <div th:if="${#fields.hasErrors('confirmPassword')}" class="col-sm-2"></div>
+					    <div th:if="${#fields.hasErrors('confirmPassword')}" class="col-sm-10">
+							<div class="form-control alert alert-danger" id="confirmPasswordError" th:errors="*{confirmPassword}"></div>
+						</div>
+			          </div>
+			          </th:block>
+			          
+			          <!-- EMAIL -->
+			          <div class="form-group row">
+			            <label for="email" class="col-sm-2 col-form-label">E-mail</label>
+			            <div class="col-sm-10">
+					      <input th:field="*{email}"  class="form-control" id="email" type="email" placeholder="Ingrese un e-mail" maxlength="100" th:disabled="${not isEdit}"/>
+					    </div>
+					    <div th:if="${#fields.hasErrors('email')}" class="w-100"></div>
+					    <div th:if="${#fields.hasErrors('email')}" class="col-sm-2" role="alert"></div>
+					    <div th:if="${#fields.hasErrors('email')}" class="col-sm-10">
+							<div class="form-control alert alert-danger" id="emailError" th:errors="*{email}"></div>
+						</div>
+			          </div>
+			          
+			          <!-- ROLES -->
+			          <div class="form-group row">
+			            <label for="roleId" class="col-sm-2 col-form-label">Rol</label>
+			            <div class="col-sm-10">
+			              <select th:field="*{roleId}" class="custom-select" th:disabled="${not isEdit}">
+					      	<option value="">-- Seleccione --</option>
+							<option th:each="roleEntity: ${roleList}"
+							      th:value="${roleEntity.id}"
+							      th:text="${roleEntity.name}" >
+						    </option>
+						  </select>
+					    </div>
+					    <div th:if="${#fields.hasErrors('roleId')}" class="w-100"></div>
+					    <div th:if="${#fields.hasErrors('roleId')}" class="col-sm-2" role="alert"></div>
+					    <div th:if="${#fields.hasErrors('roleId')}" class="col-sm-10">
+							<div class="form-control alert alert-danger" id="roleIdError" th:errors="*{roleId}"></div>
+						</div>
+			          </div>
+			          
+			          <!-- ACTIVE -->
+			          <div class="form-group row">
+			            <label for="active" class="col-sm-2 col-form-label">Activo</label>
+			            <div class="col-sm-10">
+					      <input th:field="*{active}" class="form-control" id="active" type="checkbox" th:disabled="${not isEdit}"  th:checked="${active}" style="width: auto; margin: 10px;">
+					    </div>
+			          </div>
+			          
+			          <th:block th:if="${not isEdit}">
+			          <!-- CREATED AT -->
+			          <div class="form-group row">
+			            <label for="createdAt" class="col-sm-2 col-form-label">Creado en</label>
+			            <div class="col-sm-10">
+					      <input th:field="*{createdAt}" class="form-control" id="createdAt" type="text" th:disabled="${not isEdit}">
+					    </div>
+			          </div>
+			          
+			          <!-- CREATED BY -->
+			          <div class="form-group row">
+			            <label for="createdBy" class="col-sm-2 col-form-label">Creado por</label>
+			            <div class="col-sm-10">
+					      <input th:field="*{createdBy}" class="form-control" id="createdBy" type="text" th:disabled="${not isEdit}">
+					    </div>
+			          </div>
+			          </th:block>
+			          
+			          
+			        
+			      </div>
+			      
+		        	<div class="card-footer">
+	       				<th:block th:if="${isEdit}">
+			          		<button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+			          		<a th:href="@{/dashboard/users/list}" class="btn btn-danger"><i class="fa fa-ban"></i>&nbsp;Cancelar</a>
+			          	</th:block>
+			          	<th:block th:if="${not isEdit}">
+			          		<a class="btn btn-success" th:href="@{/dashboard/users/edit/} + ${id}"><i class="fa fa-edit"></i>&nbsp;Editar</a>
+			          	</th:block>
+	        		</div>
+				</div>
+				</form>
+			</div>
+			<footer class="sticky-footer">
+      			<div class="container">
+        			<div class="text-center">
+          				<small>&copy; Plataforma Web 2018</small>
+        			</div>
+      			</div>
+    		</footer>
+    		
+    		<!-- Scroll to Top Button-->
+    		<a class="scroll-to-top rounded" href="#page-top">
+      			<i class="fa fa-angle-up"></i>
+    		</a>
+		</div>
+		<div th:replace="sb-admin-01/fragments/modal-logout :: modal-logout"></div>
+		<div th:replace="sb-admin-01/fragments/footer :: footer"></div>
+		<script type="text/javascript" >
+		function isNumberKey(evt)
+		{
+			var charCode = (evt.which) ? evt.which : evt.keyCode;
+			if (charCode != 46 && charCode > 31 
+			&& (charCode < 48 || charCode > 57))
+			return false;
+			return true;
+		}
+		</script>
+	</body>
+</html>

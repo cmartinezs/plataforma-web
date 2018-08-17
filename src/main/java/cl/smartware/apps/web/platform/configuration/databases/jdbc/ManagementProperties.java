@@ -1,4 +1,4 @@
-package cl.smartware.apps.web.platform.configuration.databases;
+package cl.smartware.apps.web.platform.configuration.databases.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -6,8 +6,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 @Configuration
-@PropertySource("file:./config/contability.properties")
-public class ContabillityProperties 
+@PropertySource("file:./config/management.properties")
+public class ManagementProperties 
 {
 	@Autowired
     private Environment env;

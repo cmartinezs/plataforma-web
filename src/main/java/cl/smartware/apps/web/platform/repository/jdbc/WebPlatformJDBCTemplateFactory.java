@@ -7,9 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import cl.smartware.apps.web.platform.configuration.databases.ContabillityDatabaseCfg;
-import cl.smartware.apps.web.platform.configuration.databases.ManagementDatabaseCfg;
-import cl.smartware.apps.web.platform.configuration.databases.RemunerationDatabaseCfg;
+import cl.smartware.apps.web.platform.configuration.databases.jdbc.ContabillityDatabaseCfg;
+import cl.smartware.apps.web.platform.configuration.databases.jdbc.ManagementDatabaseCfg;
+import cl.smartware.apps.web.platform.configuration.databases.jdbc.RemunerationDatabaseCfg;
 import cl.smartware.apps.web.platform.utils.builders.MapBuilder;
 
 @Configuration

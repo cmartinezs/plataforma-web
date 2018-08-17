@@ -2,6 +2,7 @@ package cl.smartware.apps.web.platform.repository.jpa.entity;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,13 +38,13 @@ public class RoleEntity implements EntityBase
 
 	@Column(name = "CREATED_AT", updatable = false, nullable = false)
 	@CreationTimestamp
-	private Timestamp createdAt;
+	private Timestamp createdAt = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "CREATED_BY")
 	private UserEntity roleCreatedBy;
 
-	@OneToMany(mappedBy = "role")
+	@OneToMany(mappedBy = "role", orphanRemoval = true)
 	private List<RoleUserEntity> roleUsers = new ArrayList<>();
 
 	/**

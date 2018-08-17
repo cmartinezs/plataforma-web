@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Dashboard')">
+	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Dashboard :: ' + ${moduleTitle})">
 		<title>Dashboard</title>
 	</head>
 	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -13,37 +13,46 @@
 		          		<a th:href="@{/dashboard}">Dashboard</a>
 			        </li>
 			        <li class="breadcrumb-item">
-		          		<a th:href="@{/dashboard/modules}" >M&oacute;dulos</a>
+		          		<a th:href="@{/dashboard/modules}" ><i class="fa fa-folder-open"></i>M&oacute;dulos</a>
 			        </li>
-			        <li class="breadcrumb-item active">Biblioteca</li>
+			        <li class="breadcrumb-item active"><i class="fa fa-book"></i>&nbsp;Biblioteca</li>
 		      	</ol>
 		      	
-		      	 <div class="row">
-       	 			<div class="col-xl-3 col-sm-6 mb-3">
-       	 				<div class="card">
-						  <div class="card-header">
-						    Ingreso de documentos
-						  </div>
-						  <div class="card-body">
-						    <h5 class="card-title"></h5>
-						    <p class="card-text">M&oacute;dulo que permite el ingreso de documentos a la biblioteca.</p>
-						    <a th:href="@{/dashboard/modules/library/upload-file}" class="btn btn-primary">Ir</a>
-						  </div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-sm-6 mb-3">
-						<div class="card">
-						  <div class="card-header">
-						    B&uacute;squeda de documentos
-						  </div>
-						  <div class="card-body">
-						    <h5 class="card-title"></h5>
-						    <p class="card-text">M&oacute;dulo que permite la b&uacute;squeda de documentos ingresados a la biblioiteca.</p>
-						    <a th:href="@{/dashboard/modules/library/search-file}" class="btn btn-primary">Ir</a>
-						  </div>
-						</div>
-					</div>
-       	 		</div>
+		      	<div class="card mx-auto mt-5">
+		        	<div class="card-header">
+		          		<i class="fa fa-folder-open"></i>&nbsp;Funcionalidades disponibles en el m&oacute;dulo
+		        	</div>
+		        	<div class="card-body">
+			        	<div class="row">
+		       	 			<div class="col-xl-3 col-sm-6 mb-3">
+		       	 				<div class="card">
+								  <div class="card-header">
+								    <i class="fa fa-upload"></i>&nbsp;Ingreso de documentos
+								  </div>
+								  <div class="card-body">
+								    <h5 class="card-title"></h5>
+								    <p class="card-text">M&oacute;dulo que permite el ingreso de documentos a la biblioteca.</p>
+								    <a th:href="@{/dashboard/modules/library/upload-file}" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Ir</a>
+								  </div>
+								</div>
+							</div>
+							<div class="col-xl-3 col-sm-6 mb-3">
+								<div class="card">
+								  <div class="card-header">
+								    <i class="fa fa-search"></i>&nbsp;B&uacute;squeda de documentos
+								  </div>
+								  <div class="card-body">
+								    <h5 class="card-title"></h5>
+								    <p class="card-text">M&oacute;dulo que permite la b&uacute;squeda de documentos ingresados a la biblioiteca.</p>
+								    <a th:href="@{/dashboard/modules/library/search-file}" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Ir</a>
+								  </div>
+								</div>
+							</div>
+	       	 			</div>
+		        	</div>
+		        </div>
+		      	
+		      	 
 			</div>
 			
 			<footer class="sticky-footer">

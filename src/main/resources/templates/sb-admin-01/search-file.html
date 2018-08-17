@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Biblioteca :: Ingreso de documentos')">
+	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Biblioteca :: Búsqueda de documentos')">
 		<title>Ingreso Archivo</title>
 	</head>
 	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -13,25 +13,26 @@
 		          		<a th:href="@{/dashboard}">Dashboard</a>
 			        </li>
 			        <li class="breadcrumb-item">
-		          		<a th:href="@{/dashboard/modules}" >M&oacute;dulos</a>
+		          		<a th:href="@{/dashboard/modules}"><i class="fa fa-folder-open"></i>&nbsp;M&oacute;dulos</a>
 			        </li>
 			        <li class="breadcrumb-item">
-		          		<a th:href="@{/dashboard/modules/library}" >Biblioteca</a>
+		          		<a th:href="@{/dashboard/modules/library}"><i class="fa fa-book"></i>&nbsp;Biblioteca</a>
 			        </li>
-			        <li class="breadcrumb-item active" th:text="${moduleTitle}">
-			        	Modulo
+			        <li class="breadcrumb-item active">
+			        	<i class="fa fa-search"></i>&nbsp;
+		          		<span th:text="${moduleTitle}" th:remove="tag">module</span>
 			        </li>
 		      	</ol>
 		      	
 				<div th:if="${#strings.isEmpty(finishedSearch)}" class="card mx-auto mt-5">
-			      <div class="card-header" th:inline="text">[[${formTitle}]]</div>
+			      <div class="card-header" th:inline="text"><i class="fa fa-search"></i>&nbsp;[[${formTitle}]]</div>
 			      <div class="card-body">
 			      	<form action="#" th:action="@{/dashboard/modules/library/search-file}" th:object="${searchForm}" method="POST">
 			          <!-- FILENAME -->
 			          <div class="form-group row">
 			            <label for="fileName" class="col-sm-2 col-form-label">Nombre</label>
 			            <div class="col-sm-10">
-					      <input th:field="*{name}" class="form-control" id="fileName" type="text" placeholder="Ingrese el nombre del archivo">
+					      <input th:field="*{name}" class="form-control" id="fileName" type="text" placeholder="Ingrese el nombre del archivo" maxlength="50">
 					    </div>
 					    <div th:if="${#fields.hasErrors('name')}" class="w-100"></div>
 					    <div th:if="${#fields.hasErrors('name')}" class="col-sm-2" role="alert">error</div>
@@ -58,6 +59,7 @@
 			            <label for="fileType" class="col-sm-2 col-form-label">Tipo de archivo</label>
 			            <div class="col-sm-10">
 			              <select th:field="*{type}" class="custom-select">
+					      	<option value="">-- Seleccione --</option>
 							<option th:each="fileType: ${fileTypeList}"
 							      th:value="${fileType}"
 							      th:text="${fileType.text}" >
@@ -76,6 +78,7 @@
 			            <label for="managementType" class="col-sm-2 col-form-label">Tipo de gesti&oacute;n</label>
 			            <div class="col-sm-10">
 					      <select th:field="*{management}" class="custom-select">
+					      	<option value="">-- Seleccione --</option>
 							<option th:each="managementType: ${managementTypeList}"
 							      th:value="${managementType}"
 							      th:text="${managementType.value}" >
@@ -93,7 +96,7 @@
 			          <div class="form-group row">
 			            <label for="enterprise" class="col-sm-2 col-form-label">Empresa</label>
 			            <div class="col-sm-10">
-					      <input th:field="*{enterprise}" class="form-control" id="enterprise" type="text" placeholder="Ingrese el nombre de la empresa">
+					      <input th:field="*{enterprise}" class="form-control" id="enterprise" type="text" placeholder="Ingrese el nombre de la empresa" maxlength="100">
 					    </div>
 					    <div th:if="${#fields.hasErrors('enterprise')}" class="w-100"></div>
 					    <div th:if="${#fields.hasErrors('enterprise')}" class="col-sm-2" role="alert">error</div>
@@ -130,22 +133,24 @@
 				                	<tr th:each="file : ${files}">
 				                  		<td th:text="${file.name}">nombre</td>
 				                  		<td th:text="${file.anio}">anio</td>
-				                  		<td th:text="${file.type}">tipo</td>
-				                  		<td th:text="${file.management}">gestion</td>
+				                  		<td th:text="${file.type.text}">tipo</td>
+				                  		<td th:text="${file.management.value}">gestion</td>
 				                  		<td th:text="${file.enterprise}">empresa</td>
 				                  		<td th:text="${file.fileName}">archivo</td>
-				                  		<td th:text="${file.size}">tamanio</td>
+				                  		<td th:text="${#numbers.formatDecimal(file.size / 1024.0 / 1024.0, 1, 'POINT', 2, 'COMMA')} + ' Mb'">tamanio</td>
 				                  		<td th:text="${file.createdAt}">creado</td>
 				                  		<td>
-				                  			<a th:href="@{/dashboard/modules/library/download-file?name=} + ${file.name}">
-				                  				<i class="fa fa-download" data-toggle="tooltip" data-placement="top" th:title="${'Descargar archivo '} + ${file.name} + ${' ('} + ${file.fileName} + ${')'}"></i>
+				                  			<a th:href="@{/dashboard/modules/library/download-file?name=} + ${file.name}"
+				                  				data-toggle="tooltip" data-placement="top" 
+				                  				th:title="${'Descargar '} + ${file.fileName}">
+				                  				<i class="fa fa-download"></i>
 				                  			</a>
 				                  		</td>
 				                	</tr>
 				            	</tbody>
 				     		</table>
 		             	</div>
-		             	<a th:href="@{/dashboard/modules/library/search-file}" class="btn btn-primary fa fa-refresh">&nbsp;Volver a buscar</a>
+		             	<a class="btn btn-primary" th:href="@{/dashboard/modules/library/search-file}"><i class="fa fa-refresh"></i>&nbsp;Volver a buscar</a>
 		        	</div>
 				</div>
 			</div>

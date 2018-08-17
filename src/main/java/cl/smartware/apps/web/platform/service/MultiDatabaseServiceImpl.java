@@ -64,4 +64,12 @@ public class MultiDatabaseServiceImpl implements MultiDatabaseService
 	public List<String> getColumns(String database, String table) {
 		return webPlatformJDBCRepository.getColumns(database, table);
 	}
+
+	@Override
+	public boolean isValidDatabase(WebPlatformModules webPlatformModule, String database) 
+	{
+		List<String> databases = databasesMap.get(webPlatformModule);
+
+		return databases != null && !databases.isEmpty() && databases.stream().anyMatch(t -> t.equals(database));
+	}
 }

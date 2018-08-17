@@ -1,4 +1,4 @@
-package cl.smartware.apps.web.platform.configuration.databases;
+package cl.smartware.apps.web.platform.configuration.databases.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

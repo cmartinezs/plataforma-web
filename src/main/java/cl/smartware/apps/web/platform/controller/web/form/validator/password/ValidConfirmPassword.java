@@ -1,4 +1,4 @@
-package cl.smartware.apps.web.platform.controller.web.form.validator;
+package cl.smartware.apps.web.platform.controller.web.form.validator.password;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -10,13 +10,12 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = FileValidator.class)
-@Target( { ElementType.METHOD, ElementType.FIELD })
+@Constraint(validatedBy = ConfirmPasswordValidator.class)
+@Target( { ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidFile
+public @interface ValidConfirmPassword
 {
-	String message() default "Invalid phone number";
-	int maxSize();
+	String message() default "Passwords don't match";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

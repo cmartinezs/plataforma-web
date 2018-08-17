@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Dashboard')">
+	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Dashboard :: Todos los módulos')">
 		<title>Dashboard</title>
 	</head>
 	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -12,60 +12,60 @@
 			        <li class="breadcrumb-item">
 		          		<a th:href="@{/dashboard}">Dashboard</a>
 			        </li>
-			        <li class="breadcrumb-item active">M&oacute;dulos</li>
+			        <li class="breadcrumb-item active"><i class="fa fa-folder-open"></i>&nbsp;M&oacute;dulos</li>
 		      	</ol>
 		      	
 		      	<div class="card mx-auto mt-5">
 		        	<div class="card-header">
-		          		<i class="fa fa-table"></i>&nbsp;M&oacute;dulos disponibles en la plataforma
+		          		<i class="fa fa-folder-open"></i>&nbsp;M&oacute;dulos disponibles en la plataforma
 		        	</div>
 		        	<div class="card-body">
 			        	<div class="row">
 		       	 			<div class="col-xl-3 col-sm-6 mb-3">
 		       	 				<div class="card">
 								  <div class="card-header">
-								    Contabilidad
+								    <i class="fa fa-usd"></i>&nbsp;Contabilidad
 								  </div>
 								  <div class="card-body">
 								    <h5 class="card-title">Visualizaci&oacute;n de datos</h5>
 								    <p class="card-text">M&oacute;dulo que permite la visualizaci&oacute;n de los datos de Contabilidad.</p>
-								    <a th:href="@{/dashboard/modules/contability}" class="btn btn-primary">Ir</a>
+								    <a th:href="@{/dashboard/modules/contability}" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Ir</a>
 								  </div>
 								</div>
 							</div>
 							<div class="col-xl-3 col-sm-6 mb-3">
 								<div class="card">
 								  <div class="card-header">
-								    Gesti&oacute;n
+								    <i class="fa fa-folder"></i>&nbsp;Gesti&oacute;n
 								  </div>
 								  <div class="card-body">
 								    <h5 class="card-title">Visualizaci&oacute;n de datos</h5>
 								    <p class="card-text">M&oacute;dulo que permite la visualizaci&oacute;n de los datos de Gesti&oacute;n.</p>
-								    <a th:href="@{/dashboard/modules/management}" class="btn btn-primary">Ir</a>
+								    <a th:href="@{/dashboard/modules/management}" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Ir</a>
 								  </div>
 								</div>
 							</div>
 							<div class="col-xl-3 col-sm-6 mb-3">
 								<div class="card">
 								  <div class="card-header">
-								    Remuneraci&oacute;n
+								    <i class="fa fa-legal"></i>&nbsp;Remuneraci&oacute;n
 								  </div>
 								  <div class="card-body">
 								    <h5 class="card-title">Visualizaci&oacute;n de datos</h5>
 								    <p class="card-text">M&oacute;dulo que permite la visualizaci&oacute;n de los datos de Remuneraci&oacute;n.</p>
-								    <a th:href="@{/dashboard/modules/remuneration}" class="btn btn-primary">Ir</a>
+								    <a th:href="@{/dashboard/modules/remuneration}" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Ir</a>
 								  </div>
 								</div>
 							</div>
 							<div class="col-xl-3 col-sm-6 mb-3">
 								<div class="card">
 								  <div class="card-header">
-								    Biblioteca
+								    <i class="fa fa-book"></i>&nbsp;Biblioteca
 								  </div>
 								  <div class="card-body">
 								    <h5 class="card-title">Ingreso y b&uacute;squeda</h5>
 								    <p class="card-text">M&oacute;dulo que permite el ingreso y b&uacute;squeda de documentos.</p>
-								    <a th:href="@{/dashboard/modules/library}" class="btn btn-primary">Ir</a>
+								    <a th:href="@{/dashboard/modules/library}" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Ir</a>
 								  </div>
 								</div>
 		       	 			</div>

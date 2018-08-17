@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Dashboard' + ${moduleTitle} + ' - ' + ${databaseTitle} )">
+	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Dashboard :: ' + ${moduleTitle} + ' - ' + ${databaseTitle} )">
 		<title>Dashboard</title>
 	</head>
 	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -13,13 +13,19 @@
 		          		<a th:href="@{/dashboard}">Dashboard</a>
 			        </li>
 			        <li class="breadcrumb-item">
-		          		<a th:href="@{/dashboard/modules}" >M&oacute;dulos</a>
+		          		<a th:href="@{/dashboard/modules}">
+		          			<i class="fa fa-folder-open"></i>&nbsp;M&oacute;dulos
+		          		</a>
 			        </li>
 			        <li class="breadcrumb-item">
-		          		<a th:href="@{/dashboard/modules/} + ${module}" th:text="${moduleTitle}">module</a>
+		          		<a th:href="@{/dashboard/modules/} + ${module}">
+							<i class="fa fa-folder-open"></i>&nbsp;
+		          			<span th:text="${moduleTitle}" th:remove="tag">module</span>
+						</a>
 			        </li>
-			        <li class="breadcrumb-item active" th:text="${databaseTitle}">
-			        	database
+			        <li class="breadcrumb-item active">
+			        	<i class="fa fa-database"></i>
+			        	<span th:text="${databaseTitle}" th:remove="tag">database</span>
 			        </li>
 		      	</ol>
 		      	<div class="card mx-auto mt-5">
@@ -35,7 +41,7 @@
 								  </div>
 								  <div class="card-body">
 								    <h5 class="card-title"></h5>
-								    <p class="card-text">Texto descriptivo de la tabla</p>
+								    <p class="card-text">Acceda a todos los registros de la tabla <span th:text="${table}" th:remove="tag"></span>, adem&aacute;s permite su exportaci&oacute;n.</p>
 								    <a th:href="@{/dashboard/modules/} + ${module} + '/' + ${database} + '/' + ${table}" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Ir</a>
 								  </div>
 								</div>

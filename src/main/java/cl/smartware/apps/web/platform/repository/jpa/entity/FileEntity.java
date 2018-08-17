@@ -31,13 +31,13 @@ public class FileEntity implements EntityBase
 	@Column(name = "ID", updatable = false, nullable = false)
 	private Integer id;
 	
-	@Column(name = "NAME", length = 30, nullable = false, unique = true)
+	@Column(name = "NAME", length = 50, nullable = false, unique = true)
 	private String name;
 	
-	@Column(name = "FILE_NAME", length = 50, nullable = false)
+	@Column(name = "FILE_NAME", length = 100, nullable = false)
 	private String fileName;
 	
-	@Column(name = "CONTENT_TYPE", length = 50, nullable = false)
+	@Column(name = "CONTENT_TYPE", length = 100, nullable = false)
 	private String contentType;
 	
 	@Lob

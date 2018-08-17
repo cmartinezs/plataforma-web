@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Dashboard' + ${moduleTitle} + ' - ' + ${databaseTitle} )">
+	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Dashboard :: ' + ${moduleTitle} + ' - ' + ${databaseTitle} + ' - ' + ${tableTitle})">
 		<title>Dashboard</title>
 	</head>
 	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -13,23 +13,32 @@
 		          		<a th:href="@{/dashboard}">Dashboard</a>
 			        </li>
 			        <li class="breadcrumb-item">
-		          		<a th:href="@{/dashboard/modules}" >M&oacute;dulos</a>
+		          		<a th:href="@{/dashboard/modules}" >
+		          			<i class="fa fa-folder-open"></i>&nbsp; M&oacute;dulos
+		          		</a>
 			        </li>
 			        <li class="breadcrumb-item">
-		          		<a th:href="@{/dashboard/modules/} + ${module}" th:text="${moduleTitle}">module</a>
+		          		<a th:href="@{/dashboard/modules/} + ${module}">
+							<i class="fa fa-folder-open"></i>&nbsp;
+		          			<span th:text="${moduleTitle}" th:remove="tag">module</span>
+						</a>
 			        </li>
 			        <li class="breadcrumb-item">
-		          		<a th:href="@{/dashboard/modules/} + ${module} + '/' + ${databaseTitle}" th:text="${databaseTitle}">database</a>
+		          		<a th:href="@{/dashboard/modules/} + ${module} + '/' + ${databaseTitle}">
+		          			<i class="fa fa-database"></i>&nbsp;
+		          			<span th:text="${databaseTitle}" th:remove="tag">database</span>
+		          		</a>
 			        </li>
-			        <li class="breadcrumb-item active" th:text="${tableTitle}">
-			        	table
+			        <li class="breadcrumb-item active">
+			        	<i class="fa fa-list"></i>&nbsp;
+			        	<span th:text="${tableTitle}" th:remove="tag">table</span>
 			        </li>
 		      	</ol>
 		      	<div class="card mx-auto mt-5">
 		        	<div class="card-header">
 		        		<div class="row">
 			        		<div class="col-sm-12 col-md-6">
-			        			<i class="fa fa-table"></i>&nbsp;Registros de la tabla
+			        			<i class="fa fa-list"></i>&nbsp;Registros de la tabla
 			        		</div>
 			        		<div class="col-sm-12 col-md-6">
 			        			<span class="d-flex justify-content-end" th:if="${not #strings.isEmpty(export)}">

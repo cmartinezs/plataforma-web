@@ -29,6 +29,7 @@ import cl.smartware.apps.web.platform.repository.jpa.entity.enums.ManagementType
 import cl.smartware.apps.web.platform.service.FilerEntityService;
 import cl.smartware.apps.web.platform.service.exception.FileEntityServiceException;
 import cl.smartware.apps.web.platform.service.exception.FoundRegisterFileEntityServiceException;
+import cl.smartware.apps.web.platform.service.exception.InvalidTypeFileEntityServiceException;
 import cl.smartware.apps.web.platform.service.export.ExportFileService;
 import cl.smartware.apps.web.platform.utils.ViewsComponentUtils;
 
@@ -66,7 +67,7 @@ public class LibraryWebController
 	@Secured({ "ROLE_USER" })
 	@PostMapping("/upload-file")
 	public String uploadFile(ModelMap model
-			, @Valid @ModelAttribute("fileForm")FileForm fileForm
+			, @Valid @ModelAttribute("fileForm") FileForm fileForm
 			, BindingResult bindingResult)
 	{
 		if (!bindingResult.hasErrors())
@@ -81,10 +82,9 @@ public class LibraryWebController
 			{
 				LOGGER.error("Error to save uploaded file", e);
 
-				model.addAttribute("errorUploadFile",
-						"No se ha podido guardar el archivo, intente nuevamente. Si el problema persiste avise al proveedor del servicio.");
+				model.addAttribute("errorUploadFile", "No se ha podido guardar el archivo, intente nuevamente. Si el problema persiste avise al proveedor del servicio.");
 			}
-			catch (FoundRegisterFileEntityServiceException e)
+			catch (FoundRegisterFileEntityServiceException | InvalidTypeFileEntityServiceException e)
 			{
 				LOGGER.error("Error to save uploaded file", e);
 
@@ -103,21 +103,17 @@ public class LibraryWebController
 	{
 		model.addAttribute("searchForm", new SearchForm());
 		model.remove("finishedSearch");
-		modelForUploadFile(model);
+		modelForSearchFile(model);
 		return viewsComponentUtils.addThemeFolderToView("search-file");
 	}
 
 	@Secured({ "ROLE_USER" })
 	@PostMapping("/search-file")
-	public String searchFile(ModelMap model, @Valid
-	@ModelAttribute("searchForm")
-	SearchForm searchForm, BindingResult bindingResult)
+	public String searchFile(ModelMap model, @Valid @ModelAttribute("searchForm") SearchForm searchForm, BindingResult bindingResult)
 	{
 		if (!bindingResult.hasErrors())
 		{
-			List<FileEntity> files = filerEntityService.findByNameOrAnioOrTypeOrManagementOrEnterprise(
-					searchForm.getName(), searchForm.getAnio(), searchForm.getType(), searchForm.getManagement(),
-					searchForm.getEnterprise());
+			List<FileEntity> files = filerEntityService.findBySearchForm(searchForm);
 
 			model.addAttribute("tableTitle", "Resultados de la búsqueda");
 			model.addAttribute("files", files);

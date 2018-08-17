@@ -14,4 +14,6 @@ public interface MultiDatabaseService
 	public List<Map<String, Object>> getRows(String database, String table);
 
 	public List<String> getColumns(String database, String table);
+
+	boolean isValidDatabase(WebPlatformModules webPlatformModule, String database);
 }

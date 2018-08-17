@@ -58,6 +58,11 @@ public class ModuleWebController
 		
 		WebPlatformModules webPlatformModule = getValidWebPlatformModule(module);
 		
+		if(webPlatformModule.equals(WebPlatformModules.UNKNOWN))
+		{
+			return "/dashboard/modules";
+		}
+		
 		String moduleName = webPlatformModule.getModuleName();
 		
 		List<String> databases = multiDatabaseService.getDatabasesListFromModule(webPlatformModule);
@@ -81,6 +86,12 @@ public class ModuleWebController
 		LOGGER.info(MessageFormat.format("Validating 'path-variable' module {0}", module));
 		
 		WebPlatformModules webPlatformModule = getValidWebPlatformModule(module);
+		
+		if(webPlatformModule.equals(WebPlatformModules.UNKNOWN)
+				|| !multiDatabaseService.isValidDatabase(webPlatformModule, database))
+		{
+			return "redirect:/dashboard/modules/" + webPlatformModule.getModuleName();
+		}
 		
 		String moduleName = webPlatformModule.getModuleName();
 		
@@ -108,6 +119,12 @@ public class ModuleWebController
 		LOGGER.info(MessageFormat.format("Validating 'path-variable' module {0}", module));
 		
 		WebPlatformModules webPlatformModule = getValidWebPlatformModule(module);
+		
+		if(webPlatformModule.equals(WebPlatformModules.UNKNOWN)
+				|| !multiDatabaseService.isValidDatabase(webPlatformModule, database))
+		{
+			return "redirect:/dashboard/modules/" + webPlatformModule.getModuleName();
+		}
 		
 		String moduleName = webPlatformModule.getModuleName();
 		
@@ -148,6 +165,12 @@ public class ModuleWebController
 		LOGGER.info(MessageFormat.format("Validating 'path-variable' module {0}", module));
 		
 		WebPlatformModules webPlatformModule = getValidWebPlatformModule(module);
+		
+		if(webPlatformModule.equals(WebPlatformModules.UNKNOWN)
+				||  !multiDatabaseService.isValidDatabase(webPlatformModule, database))
+		{
+			return ResponseEntity.notFound().build();
+		}
 		
 		try 
 		{

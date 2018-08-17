@@ -38,7 +38,7 @@ public class UserDetailsServiceRepository implements UserDetailsService
 
 		userloggedService.setUserEntity(userEntity);
 		
-		System.out.println("Found User: " + userEntity);
+		System.out.println("Found User: " + userEntity.getUsername());
 
 		// [ROLE_USER, ROLE_ADMIN,..]
 		List<String> roleNames = RoleUserUtils.asANameList(userEntity.getRoleUsers());

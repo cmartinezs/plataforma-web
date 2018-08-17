@@ -52,8 +52,7 @@ public class UserDetailsServiceEntity implements UserDetailsService
 			}
 		}
 
-		UserDetails userDetails = (UserDetails) new User(userEntity.getUsername(), //
-				userEntity.getPassword(), grantList);
+		UserDetails userDetails = (UserDetails) new User(userEntity.getUsername(), userEntity.getPassword(), grantList);
 
 		return userDetails;
 	}

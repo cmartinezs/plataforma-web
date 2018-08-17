@@ -72,7 +72,7 @@ public class ExportFileServiceImpl implements ExportFileService
 		
 		String contentType = null;
 		
-		if(FileTypes.PDF.getExt().equalsIgnoreCase(ext))
+		if(FileTypes.PDF.getFileExtension().equalsIgnoreCase(ext))
 		{
 			out = generatePDF(rows, header);
 			contentType = MediaType.APPLICATION_PDF_VALUE;

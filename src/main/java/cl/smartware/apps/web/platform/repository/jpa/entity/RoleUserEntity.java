@@ -1,12 +1,15 @@
 package cl.smartware.apps.web.platform.repository.jpa.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -18,15 +21,56 @@ import org.hibernate.annotations.CreationTimestamp;
 public class RoleUserEntity implements EntityBase
 {
 	private static final long serialVersionUID = -2484249599382362060L;
+	
+	@Embeddable
+	public static class RoleUserId implements Serializable
+	{
+		private static final long serialVersionUID = -1599561875174685442L;
+		
+	    @Column(name = "user_id")  
+		private Integer userId;
 
-	@Id
-	@ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")  
+		@Column(name = "role_id")
+		private Integer roleId;
+
+		/**
+		 * @return the userId
+		 */
+		public Integer getUserId() {
+			return userId;
+		}
+
+		/**
+		 * @param userId the userId to set
+		 */
+		public void setUserId(Integer userId) {
+			this.userId = userId;
+		}
+
+		/**
+		 * @return the roleId
+		 */
+		public Integer getRoleId() {
+			return roleId;
+		}
+
+		/**
+		 * @param roleId the roleId to set
+		 */
+		public void setRoleId(Integer roleId) {
+			this.roleId = roleId;
+		}
+	}
+
+	@EmbeddedId
+	private RoleUserId roleUserId;
+	
+	@ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)  
 	private UserEntity user;
 
-	@Id
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "role_id")
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "role_id", insertable = false, updatable = false)
 	private RoleEntity role;
 
 	@Column(name = "ACTIVE", nullable = false)
@@ -34,41 +78,45 @@ public class RoleUserEntity implements EntityBase
 
 	@Column(name = "CREATED_AT", updatable = false, nullable = false)
 	@CreationTimestamp
-	private Timestamp createdAt;
+	private Timestamp createdAt = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "CREATED_BY")
 	private UserEntity createdBy;
 
+	public RoleUserId getRoleUserId() {
+		return roleUserId;
+	}
+
+	public void setRoleUserId(RoleUserId roleUserId) {
+		this.roleUserId = roleUserId;
+	}
+	
 	/**
 	 * @return the user
 	 */
-	public UserEntity getUser()
-	{
-		return this.user;
+	public UserEntity getUser() {
+		return user;
 	}
 
 	/**
 	 * @param user the user to set
 	 */
-	public void setUser(UserEntity user)
-	{
+	public void setUser(UserEntity user) {
 		this.user = user;
 	}
 
 	/**
 	 * @return the role
 	 */
-	public RoleEntity getRole()
-	{
-		return this.role;
+	public RoleEntity getRole() {
+		return role;
 	}
 
 	/**
 	 * @param role the role to set
 	 */
-	public void setRole(RoleEntity role)
-	{
+	public void setRole(RoleEntity role) {
 		this.role = role;
 	}
 

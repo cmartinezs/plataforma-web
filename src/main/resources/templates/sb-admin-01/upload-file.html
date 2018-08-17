@@ -13,18 +13,19 @@
 		          		<a th:href="@{/dashboard}">Dashboard</a>
 			        </li>
 			        <li class="breadcrumb-item">
-		          		<a th:href="@{/dashboard/modules}" >M&oacute;dulos</a>
+		          		<a th:href="@{/dashboard/modules}" ><i class="fa fa-folder-open"></i>&nbsp;M&oacute;dulos</a>
 			        </li>
 			        <li class="breadcrumb-item">
-		          		<a th:href="@{/dashboard/modules/library}" >Biblioteca</a>
+		          		<a th:href="@{/dashboard/modules/library}"><i class="fa fa-book"></i>&nbsp;Biblioteca</a>
 			        </li>
-			        <li class="breadcrumb-item active" th:text="${moduleTitle}">
-			        	Modulo
+			        <li class="breadcrumb-item active">
+			        	<i class="fa fa-upload"></i>&nbsp;
+		          		<span th:text="${moduleTitle}" th:remove="tag">module</span>
 			        </li>
 		      	</ol>
 		      	
 				<div class="card mx-auto mt-5">
-			      <div class="card-header" th:inline="text">[[${formTitle}]]</div>
+			      <div class="card-header" th:inline="text"><i class="fa fa-upload"></i>&nbsp;[[${formTitle}]]</div>
 			      <div class="card-body">
 			      	<div th:if="${not #strings.isEmpty(uploadSucces)}" th:text="${uploadSucces}" class="alert alert-success" role="alert">uploadSucces</div>
 			      	<div th:if="${not #strings.isEmpty(errorUploadFile)}" th:text="${errorUploadFile}" class="alert alert-danger" role="alert">errorUploadFile</div>
@@ -73,6 +74,7 @@
 			            <label for="fileType" class="col-sm-2 col-form-label">Tipo de archivo</label>
 			            <div class="col-sm-10">
 			              <select th:field="*{type}" class="custom-select">
+					      	<option value="">-- Seleccione --</option>
 							<option th:each="fileType: ${fileTypeList}"
 							      th:value="${fileType}"
 							      th:text="${fileType.text}" >
@@ -91,6 +93,7 @@
 			            <label for="managementType" class="col-sm-2 col-form-label">Tipo de gesti&oacute;n</label>
 			            <div class="col-sm-10">
 					      <select th:field="*{management}" class="custom-select">
+					      	<option value="">-- Seleccione --</option>
 							<option th:each="managementType: ${managementTypeList}"
 							      th:value="${managementType}"
 							      th:text="${managementType.value}" >
@@ -116,7 +119,8 @@
 							<div class="form-control alert alert-danger" id="enterpriseError" th:errors="*{enterprise}"></div>
 						</div>
 			          </div>
-			          <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+			          <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+			          <a th:href="@{/dashboard/modules/library}" class="btn btn-danger"><i class="fa fa-ban"></i>&nbsp;Cancelar</a>
 			        </form>
 			      </div>
 				</div>
