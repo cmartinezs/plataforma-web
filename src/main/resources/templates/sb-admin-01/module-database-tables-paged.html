@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="sb-admin-01/fragments/head_tag :: head_tag('Dashboard :: ' + ${moduleTitle} + ' - ' + ${databaseTitle} + ' - ' + ${tableTitle})">
+		<title>Dashboard</title>
+	</head>
+	<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+		<div th:replace="sb-admin-01/fragments/menu :: nav('Dashboard')"></div>
+		
+		<div class="content-wrapper">
+			<div class="container-fluid">
+				<ol class="breadcrumb">
+			        <li class="breadcrumb-item">
+		          		<a th:href="@{/dashboard}">Dashboard</a>
+			        </li>
+			        <li class="breadcrumb-item">
+		          		<a th:href="@{/dashboard/modules}" >
+		          			<i class="fa fa-folder-open"></i>&nbsp; M&oacute;dulos
+		          		</a>
+			        </li>
+			        <li class="breadcrumb-item">
+		          		<a th:href="@{/dashboard/modules/} + ${module}">
+							<i class="fa fa-folder-open"></i>&nbsp;
+		          			<span th:text="${moduleTitle}" th:remove="tag">module</span>
+						</a>
+			        </li>
+			        <li class="breadcrumb-item">
+		          		<a th:href="@{/dashboard/modules/} + ${module} + '/' + ${databaseTitle}">
+		          			<i class="fa fa-database"></i>&nbsp;
+		          			<span th:text="${databaseTitle}" th:remove="tag">database</span>
+		          		</a>
+			        </li>
+			        <li class="breadcrumb-item active">
+			        	<i class="fa fa-list"></i>&nbsp;
+			        	<span th:text="${tableTitle}" th:remove="tag">table</span>
+			        </li>
+		      	</ol>
+		      	<div class="card mx-auto mt-5">
+		        	<div class="card-header">
+		        		<div class="row">
+			        		<div class="col-sm-12 col-md-6">
+			        			<i class="fa fa-list"></i>&nbsp;Registros de la tabla&nbsp;<span th:text="${tableTitle}" th:remove="tag">tableTitle</span>
+			        		</div>
+			        		<div class="col-sm-12 col-md-6">
+			        			<span class="d-flex justify-content-end" th:if="${not #strings.isEmpty(export)}">
+					          		<a class="btn btn-primary btn-sm" style="margin-right: 10px;" role="button" aria-pressed="true" th:href="@{/dashboard/modules/} + ${module} + '/' + ${databaseTitle} + '/' + ${tableTitle} + '/export/pdf'">
+				          				<i class="fa fa-file-pdf-o"></i>&nbsp;Exportar a PDF
+				          			</a>
+				          			<a class="btn btn-primary btn-sm" role="button" aria-pressed="true" th:href="@{/dashboard/modules/} + ${module} + '/' + ${databaseTitle} + '/' + ${tableTitle} + '/export/xlsx'">
+				          				<i class="fa fa-file-excel-o"></i>&nbsp;Exportar a Excel
+				          			</a>
+				          		</span>
+			        		</div>
+		        		</div>
+		          	</div>
+		        	<div class="card-body">
+		        		<div class="table-responsive">
+		            		<table class="table table-bordered">
+		              			<thead class="thead-dark">
+					                <tr>
+						                <th:block th:each="columnName: ${tableColumnNames}">
+						                  	<th th:text="${columnName}">Nombre de columna</th>
+						                </th:block>
+					                </tr>
+				              	</thead>
+				              	<tbody>
+				                	<tr th:if="${totalPage > 0}" th:each="row : ${tableRows}">
+					                	<th:block th:each="entry : ${row}">
+							                <td th:text="${entry.value}">valor del campo en la fila</td>
+							            </th:block>
+				                	</tr>
+				                	<tr th:if="${totalPage == 0}">
+					                	<th:block>
+							                <td th:colspan="${ tableColumnNames.size() }">No hay registros en esta tabla</td>
+							            </th:block>
+				                	</tr>
+				            	</tbody>
+			     			</table>
+		        		</div>
+			        </div>
+			        <div class="card-footer">
+            			<nav th:if="${totalPage > 0}">
+						  <ul class="pagination pagination-mg">
+
+						    <li class="page-item" th:classappend="${page == 1 ? 'disabled' : ''}">
+						      	<a class="page-link" th:href="@{/dashboard/modules/} + ${module} + '/' + ${database} + '/' + ${table} + '/' + ${pageSize} + '/' + ${page - 1}" aria-label="Anterior">Anterior</a>
+						    </li>
+						    
+						    <li class="page-item" th:classappend="${page == 1 ? 'active pointer-disabled' : ''}">
+						      	<a class="page-link" th:href="@{/dashboard/modules/} + ${module} + '/' + ${database} + '/' + ${table} + '/' + ${pageSize} + '/1'" >1</a>
+						    </li>
+						    
+						    <th:block th:if="${startPage > 0}" th:each="itPage : ${#numbers.sequence(startPage, endPage)}">
+						    	<li class="page-item" th:classappend="${page == itPage ? 'active pointer-disabled' : ''}">
+				                    <a class="page-link" th:href="@{/dashboard/modules/} + ${module} + '/' + ${database} + '/' + ${table} + '/' + ${pageSize} + '/' + ${itPage}" th:text="${itPage}">itPage</a>
+				                </li>
+						    </th:block>
+						    
+						    <li th:if="${totalPage != 1}" class="page-item" th:classappend="${page == totalPage ? 'active pointer-disabled' : ''}">
+						      	<a class="page-link" th:href="@{/dashboard/modules/} + ${module} + '/' + ${database} + '/' + ${table} + '/' + ${pageSize} + '/' + ${totalPage}" th:text="${totalPage}">totalPage</a>
+						    </li>
+						    
+						    <li class="page-item" th:classappend="${page == totalPage ? 'disabled pointer-disabled' : ''}">
+						    	<a class="page-link" th:href="@{/dashboard/modules/} + ${module} + '/' + ${database} + '/' + ${table} + '/' + ${pageSize} + '/' + ${page + 1}">Siguiente</a>
+						    </li>
+
+						  </ul>
+						</nav>
+						<a th:href="@{/dashboard/modules/} + ${module} + '/' + ${database}" class="btn btn-primary"><i class="fa fa-undo"></i>&nbsp;Volver</a>
+			        </div>
+				</div>
+			
+				<footer class="sticky-footer">
+	      			<div class="container">
+	        			<div class="text-center">
+	          				<small>&copy; Plataforma Web 2018</small>
+	        			</div>
+	      			</div>
+	    		</footer>
+	    		
+	    		<!-- Scroll to Top Button-->
+	    		<a class="scroll-to-top rounded" href="#page-top">
+	      			<i class="fa fa-angle-up"></i>
+	    		</a>
+			</div>
+		</div>
+		<div th:replace="sb-admin-01/fragments/modal-logout :: modal-logout"></div>
+		<div th:replace="sb-admin-01/fragments/footer :: footer"></div>
+	</body>
+</html>

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.itextpdf.text.DocumentException;
 
+import cl.smartware.apps.web.platform.repository.jdbc.WebPlatformJDBCRepositoryImpl.PagedResult;
 import cl.smartware.apps.web.platform.service.MultiDatabaseService;
 import cl.smartware.apps.web.platform.service.WebPlatformModules;
 import cl.smartware.apps.web.platform.service.export.ExportFileService;
@@ -111,7 +112,19 @@ public class ModuleWebController
 	public String tables(
 			@PathVariable("module") String module
 			, @PathVariable("database") String database
+			, @PathVariable("table") String table)
+	{
+		return "redirect:/dashboard/modules/" + module + "/" + database + "/" + table + "/" + 10 + "/" + 1;
+	}
+	
+	@Secured({ "ROLE_USER" })
+	@GetMapping("/{module}/{database}/{table}/{pageSize}/{page}")
+	public String tables(
+			@PathVariable("module") String module
+			, @PathVariable("database") String database
 			, @PathVariable("table") String table
+			, @PathVariable("pageSize") Integer pageSize
+			, @PathVariable("page") Integer page
 			, ModelMap model)
 	{
 		model.remove("export");
@@ -134,7 +147,11 @@ public class ModuleWebController
 		model.addAttribute("databaseTitle", database);
 		model.addAttribute("tableTitle", table);
 		
-		List<Map<String, Object>> tableRows = multiDatabaseService.getRows(database, table);
+		/*List<Map<String, Object>> tableRows = multiDatabaseService.getAll(database, table); */
+		
+		PagedResult pagedResult = multiDatabaseService.getPagedAll(database, table, page, pageSize);
+		
+		List<Map<String, Object>> tableRows = pagedResult.getResult();
 		
 		List<String> tableColumnNames = null;
 		
@@ -148,15 +165,22 @@ public class ModuleWebController
 			tableColumnNames = multiDatabaseService.getColumns(database, table);
 		}
 		
+		pagedResult.calculateStartAndEndPage();
+		
 		model.addAttribute("tableColumnNames", tableColumnNames);
 		model.addAttribute("tableRows", tableRows);
+		model.addAttribute("page", pagedResult.getPage());
+		model.addAttribute("pageSize", pagedResult.getPageSize());
+		model.addAttribute("startPage", pagedResult.getStartPage());
+		model.addAttribute("endPage", pagedResult.getEndPage());
+		model.addAttribute("totalPage", pagedResult.getTotalPage());
 		
-		return viewsComponentUtils.addThemeFolderToView("module-database-tables");
+		return viewsComponentUtils.addThemeFolderToView("module-database-tables-paged");
 	}
 	
 	@Secured({ "ROLE_USER" })
-	@GetMapping("/{module}/{database}/{table}/{ext}")
-	public ResponseEntity<ByteArrayResource>  export(
+	@GetMapping("/{module}/{database}/{table}/export/{ext}")
+	public ResponseEntity<ByteArrayResource> export(
 			@PathVariable("module") String module
 			, @PathVariable("database") String database
 			, @PathVariable("table") String table

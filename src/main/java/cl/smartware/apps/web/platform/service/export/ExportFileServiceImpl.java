@@ -65,7 +65,7 @@ public class ExportFileServiceImpl implements ExportFileService
 	@Override
 	public FileExport generateFileToExport(String module, String database, String table, String ext) throws DocumentException, IOException 
 	{
-		List<Map<String, Object>> rows = multiDatabaseService.getRows(database, table);
+		List<Map<String, Object>> rows = multiDatabaseService.getAll(database, table);
 		List<String> header = ListUtils.setToList(rows.get(0).keySet());
 		
 		ByteArrayOutputStream out = null;

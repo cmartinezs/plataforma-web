@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import cl.smartware.apps.web.platform.repository.jdbc.WebPlatformJDBCRepository;
+import cl.smartware.apps.web.platform.repository.jdbc.WebPlatformJDBCRepositoryImpl.PagedResult;
 import cl.smartware.apps.web.platform.utils.builders.MapBuilder;
 
 @Service
@@ -56,8 +57,8 @@ public class MultiDatabaseServiceImpl implements MultiDatabaseService
 	}
 
 	@Override
-	public List<Map<String, Object>> getRows(String database, String tableName) {
-		return webPlatformJDBCRepository.getAllRegistresFromTable(database, tableName);
+	public List<Map<String, Object>> getAll(String database, String tableName) {
+		return webPlatformJDBCRepository.getAll(database, tableName);
 	}
 
 	@Override
@@ -71,5 +72,11 @@ public class MultiDatabaseServiceImpl implements MultiDatabaseService
 		List<String> databases = databasesMap.get(webPlatformModule);
 
 		return databases != null && !databases.isEmpty() && databases.stream().anyMatch(t -> t.equals(database));
+	}
+
+	@Override
+	public PagedResult getPagedAll(String database, String table, Integer page, Integer pageSize) 
+	{
+		return webPlatformJDBCRepository.getPagedAll(database, table, page, pageSize);
 	}
 }
