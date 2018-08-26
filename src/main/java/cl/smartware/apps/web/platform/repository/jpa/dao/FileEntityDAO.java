@@ -8,6 +8,8 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import cl.smartware.apps.web.platform.repository.jpa.entity.FileEntity;
+import cl.smartware.apps.web.platform.repository.jpa.entity.enums.FileTypes;
+import cl.smartware.apps.web.platform.repository.jpa.entity.enums.ManagementTypes;
 
 @Repository
 public class FileEntityDAO extends EntityDAO<FileEntity, Integer> {
@@ -25,14 +27,14 @@ public class FileEntityDAO extends EntityDAO<FileEntity, Integer> {
 					.append(FileEntity.class.getName())
 					.append(" f ");
 		
-		if(fieldValues != null)
+		if(fieldValues != null && !fieldValues.isEmpty())
 		{
 			jpql.append("WHERE 1 = 1 ");
 						
 			fieldValues.forEach((field, value) -> {
-				jpql.append("and ")
+				jpql.append("AND ")
 					.append("f.").append(field)
-					.append("= ")
+					.append(value instanceof ManagementTypes || value instanceof FileTypes ? " = " : " LIKE ")
 					.append(":").append(field)
 					.append(" ");
 			});
@@ -40,11 +42,15 @@ public class FileEntityDAO extends EntityDAO<FileEntity, Integer> {
 		
 		Query query = entityManager.createQuery(jpql.toString());
 		
-		if(fieldValues != null)
+		if(fieldValues != null && !fieldValues.isEmpty())
 		{
-			fieldValues.forEach((field, value) -> {
-				query.setParameter(field, value);
-			});
+			fieldValues.forEach((field, value) -> { 
+				query.setParameter(
+						field
+						, value instanceof ManagementTypes 
+							|| value instanceof FileTypes ? value : "%" + value + "%"
+					); 
+				});
 		}
 		
 		return (List<FileEntity>) query.getResultList();

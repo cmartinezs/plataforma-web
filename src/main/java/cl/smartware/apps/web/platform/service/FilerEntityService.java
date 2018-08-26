@@ -6,6 +6,7 @@ import java.util.Optional;
 import cl.smartware.apps.web.platform.controller.web.form.FileForm;
 import cl.smartware.apps.web.platform.controller.web.form.SearchForm;
 import cl.smartware.apps.web.platform.repository.jpa.entity.FileEntity;
+import cl.smartware.apps.web.platform.repository.jpa.entity.UserEntity;
 import cl.smartware.apps.web.platform.repository.jpa.entity.enums.FileTypes;
 import cl.smartware.apps.web.platform.repository.jpa.entity.enums.ManagementTypes;
 import cl.smartware.apps.web.platform.service.exception.FileEntityServiceException;
@@ -25,4 +26,8 @@ public interface FilerEntityService
 	public List<FileEntity> findBySearchForm(SearchForm searchForm);
 
 	public Optional<FileEntity> findByName(String name);
+
+	public List<FileEntity> findByCreatedBy(UserEntity userEntity);
+
+	public void saveAll(List<FileEntity> files);
 }

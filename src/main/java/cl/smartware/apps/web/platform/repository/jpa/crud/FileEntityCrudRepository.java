@@ -14,5 +14,7 @@ public interface FileEntityCrudRepository extends CrudRepository<FileEntity, Int
 	public List<FileEntity> findByNameOrAnioOrTypeOrManagementOrEnterprise(String name, Integer anio, FileTypes type, ManagementTypes management, String enterprise);
 	
 	public Optional<FileEntity> findByName(String name);
+	
+	public List<FileEntity> findByCreatedById(Integer id);
 }
 		

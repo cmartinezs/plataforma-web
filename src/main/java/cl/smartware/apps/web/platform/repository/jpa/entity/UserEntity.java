@@ -12,15 +12,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name = "user")
+@Table(name = "WP_USER", uniqueConstraints = @UniqueConstraint(columnNames = {"USERNAME"}))
 public class UserEntity implements EntityBase
 {
 	private static final long serialVersionUID = -5731260521355518321L;
@@ -30,7 +29,7 @@ public class UserEntity implements EntityBase
 	@Column(name = "ID", updatable = false, nullable = false)
 	private Integer id;
 
-	@Column(name = "USERNAME", length = 30, updatable = false, nullable = false)
+	@Column(name = "USERNAME", length = 30, updatable = false, nullable = false, unique = true)
 	private String username;
 
 	@Column(name = "PASSWORD", length = 60, nullable = false)
@@ -39,9 +38,6 @@ public class UserEntity implements EntityBase
 	@Column(name = "EMAIL", length = 100, nullable = true)
 	private String email;
 
-	@Column(name = "COMMUNITY_ID", nullable = true)
-	private Integer communityId;
-
 	@Column(name = "ACTIVE", nullable = false)
 	private Boolean active = true;
 
@@ -49,18 +45,8 @@ public class UserEntity implements EntityBase
 	@CreationTimestamp
 	private Timestamp createdAt = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@JoinColumn(name = "CREATED_BY")
-	private UserEntity userCreatedBy;
-
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
 	private List<RoleUserEntity> roleUsers = new ArrayList<>();
-
-	@OneToMany(mappedBy = "roleCreatedBy", orphanRemoval = true)
-	private List<RoleEntity> createdRoles = new ArrayList<>();
-
-	@OneToMany(mappedBy = "userCreatedBy", orphanRemoval = true)
-	private List<UserEntity> createdUsers = new ArrayList<>();
 
 	/**
 	 * @return the id
@@ -131,23 +117,6 @@ public class UserEntity implements EntityBase
 	}
 
 	/**
-	 * @return the communityId
-	 */
-	public Integer getComunityId()
-	{
-		return this.communityId;
-	}
-
-	/**
-	 * @param communityId
-	 *            the communityId to set
-	 */
-	public void setComunityId(Integer comunityId)
-	{
-		this.communityId = comunityId;
-	}
-
-	/**
 	 * @return the active
 	 */
 	public Boolean getActive()
@@ -182,48 +151,6 @@ public class UserEntity implements EntityBase
 	}
 
 	/**
-	 * @return the userCreatedBy
-	 */
-	public UserEntity getCreatedBy()
-	{
-		return this.userCreatedBy;
-	}
-
-	/**
-	 * @param userCreatedBy
-	 *            the userCreatedBy to set
-	 */
-	public void setCreatedBy(UserEntity createdBy)
-	{
-		this.userCreatedBy = createdBy;
-	}
-
-	/**
-	 * @return the createdRoles
-	 */
-	public List<RoleEntity> getCreatedRoles()
-	{
-		return this.createdRoles;
-	}
-
-	/**
-	 * @return the communityId
-	 */
-	public Integer getCommunityId()
-	{
-		return this.communityId;
-	}
-
-	/**
-	 * @param communityId
-	 *            the communityId to set
-	 */
-	public void setCommunityId(Integer communityId)
-	{
-		this.communityId = communityId;
-	}
-
-	/**
 	 * @return the roleUsers
 	 */
 	public List<RoleUserEntity> getRoleUsers()
@@ -240,32 +167,6 @@ public class UserEntity implements EntityBase
 		this.roleUsers = roleUsers;
 	}
 
-	/**
-	 * @param createdRoles
-	 *            the createdRoles to set
-	 */
-	public void setCreatedRoles(List<RoleEntity> createdRoles)
-	{
-		this.createdRoles = createdRoles;
-	}
-
-	/**
-	 * @return the createdUsers
-	 */
-	public List<UserEntity> getCreatedUsers()
-	{
-		return this.createdUsers;
-	}
-
-	/**
-	 * @param createdUsers
-	 *            the createdUsers to set
-	 */
-	public void setCreatedUsers(List<UserEntity> createdUsers)
-	{
-		this.createdUsers = createdUsers;
-	}
-	
 	public UserEntity removeRoleUser(RoleUserEntity roleUserEntity)
 	{
 		this.roleUsers.remove(roleUserEntity);

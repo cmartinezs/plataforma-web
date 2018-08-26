@@ -17,4 +17,6 @@ public interface UserEntityService {
 	public UserForm entityToForm(UserEntity userEntity);
 
 	public UserEntity save(UserForm userForm, UserEntity userEntity) throws RoleNotFoundUserEntityServiceException, UserNotFoundUserEntityServiceException;
+
+	public void delete(UserEntity userEntity);
 }

@@ -20,6 +20,8 @@
 		        	</div>
 		        	<div class="card-body">
 			      		<div th:if="${not #strings.isEmpty(advertice)}" th:text="${advertice}" class="alert alert-warning" role="alert">advertice</div>
+			      		<div th:if="${not #strings.isEmpty(deleteSuccess)}" th:text="${deleteSuccess}" class="alert alert-success" role="alert">deleteSuccess</div>
+			      		<div th:if="${not #strings.isEmpty(deleteFail)}" th:text="${deleteFail}" class="alert alert-danger" role="alert">deleteFail</div>
 		        		<div class="table-responsive">
 		            		<table class="table table-bordered" id="dataTable">
 		              			<thead>
@@ -63,7 +65,7 @@
 											<a class="btn btn-danger" th:href="@{/dashboard/users/delete/} + ${user.id}" 
 												data-toggle="tooltip" data-placement="top"
 												th:title="Eliminar"
-												rel="nofollow">
+												rel="nofollow" style="margin-right: 10px;">
 												<i class="fa fa-trash"></i>
 											</a>
 										</td>

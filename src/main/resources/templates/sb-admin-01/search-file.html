@@ -125,6 +125,7 @@
 					                  	<th>Empresa</th>
 					                  	<th>Archivo</th>
 					                  	<th>Tama&ntilde;o</th>
+					                  	<th>Subido por</th>
 					                  	<th>Ingresado en</th>
 					                  	<th></th>
 					                </tr>
@@ -137,8 +138,22 @@
 				                  		<td th:text="${file.management.value}">gestion</td>
 				                  		<td th:text="${file.enterprise}">empresa</td>
 				                  		<td th:text="${file.fileName}">archivo</td>
-				                  		<td th:text="${#numbers.formatDecimal(file.size / 1024.0 / 1024.0, 1, 'POINT', 2, 'COMMA')} + ' Mb'">tamanio</td>
-				                  		<td th:text="${file.createdAt}">creado</td>
+				                  		<th:block th:if="${file.size < 512}">
+				                  			<td th:text="${#numbers.formatDecimal(file.size, 1, 'POINT', 0, 'COMMA')} + ' bytes'">tamanio</td>
+				                  		</th:block>
+				                  		<th:block th:if="${file.size < 524288 and file.size >= 512}">
+				                  			<td th:text="${#numbers.formatDecimal(file.size / 1024.0, 1, 'POINT', 2, 'COMMA')} + ' Kb'">tamanio</td>
+				                  		</th:block>
+				                  		<th:block th:if="${file.size > 524288}">
+				                  			<td th:text="${#numbers.formatDecimal(file.size / 1024.0 / 1024.0, 1, 'POINT', 2, 'COMMA')} + ' Mb'">tamanio</td>
+				                  		</th:block>
+				                  		<th:block th:if="${file.createdBy != null}">
+				                  			<td th:text="${file.createdBy.username}">subido</td>
+				                  		</th:block>
+				                  		<th:block th:if="${file.createdBy == null}">
+				                  			<td>Sin credor registrado</td>
+				                  		</th:block>
+				                  		<td th:text="${#dates.format(file.createdAt, 'dd-MM-yyyy HH:mm')}">creado</td>
 				                  		<td>
 				                  			<a th:href="@{/dashboard/modules/library/download-file?name=} + ${file.name}"
 				                  				data-toggle="tooltip" data-placement="top" 

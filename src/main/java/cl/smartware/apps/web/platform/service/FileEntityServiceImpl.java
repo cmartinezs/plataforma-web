@@ -20,6 +20,7 @@ import cl.smartware.apps.web.platform.controller.web.form.SearchForm;
 import cl.smartware.apps.web.platform.repository.jpa.crud.FileEntityCrudRepository;
 import cl.smartware.apps.web.platform.repository.jpa.dao.FileEntityDAO;
 import cl.smartware.apps.web.platform.repository.jpa.entity.FileEntity;
+import cl.smartware.apps.web.platform.repository.jpa.entity.UserEntity;
 import cl.smartware.apps.web.platform.repository.jpa.entity.enums.FileTypes;
 import cl.smartware.apps.web.platform.repository.jpa.entity.enums.ManagementTypes;
 import cl.smartware.apps.web.platform.service.exception.FileEntityServiceException;
@@ -167,6 +168,18 @@ public class FileEntityServiceImpl implements FilerEntityService
 	public Optional<FileEntity> findByName(String name)
 	{
 		return fileEntityCrudRepository.findByName(name);
+	}
+
+	@Override
+	public List<FileEntity> findByCreatedBy(UserEntity userEntity) 
+	{
+		return fileEntityCrudRepository.findByCreatedById(userEntity.getId());
+	}
+
+	@Override
+	public void saveAll(List<FileEntity> files) 
+	{
+		fileEntityCrudRepository.saveAll(files);
 	}
 
 }

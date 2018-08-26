@@ -15,6 +15,7 @@ import org.thymeleaf.util.StringUtils;
 import cl.smartware.apps.web.platform.controller.web.form.UserForm;
 import cl.smartware.apps.web.platform.repository.jpa.crud.RoleEntityCrudRepository;
 import cl.smartware.apps.web.platform.repository.jpa.crud.UserEntityCrudRepository;
+import cl.smartware.apps.web.platform.repository.jpa.entity.FileEntity;
 import cl.smartware.apps.web.platform.repository.jpa.entity.RoleEntity;
 import cl.smartware.apps.web.platform.repository.jpa.entity.RoleUserEntity;
 import cl.smartware.apps.web.platform.repository.jpa.entity.RoleUserEntity.RoleUserId;
@@ -33,6 +34,9 @@ public class UserEntityServiceImpl implements UserEntityService
 	
 	@Autowired
 	private RoleUserEntityService roleUserEntityService;
+	
+	@Autowired
+	private FilerEntityService filerEntityService;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -61,7 +65,6 @@ public class UserEntityServiceImpl implements UserEntityService
 		userForm.setRoleId(userEntity.getRoleUsers().get(0).getRoleUserId().getRoleId());
 		userForm.setActive(userEntity.getActive());
 		userForm.setCreatedAt(new SimpleDateFormat("dd-MM-yyyy").format(userEntity.getCreatedAt()));
-		userForm.setCreatedBy(userEntity.getCreatedBy().getUsername());
 		return userForm;
 	}
 
@@ -110,7 +113,6 @@ public class UserEntityServiceImpl implements UserEntityService
 		if(Objects.isNull(newUserEntity))
 		{
 			newUserEntity = new UserEntity();
-			newUserEntity.setCreatedBy(loggedUserEntity);
 			newUserEntity.setUsername(userForm.getUsername());
 		}
 		
@@ -133,18 +135,25 @@ public class UserEntityServiceImpl implements UserEntityService
 			
 			newRoleUserEntity = new RoleUserEntity();
 			newRoleUserEntity.setRoleUserId(roleUserId);
-			newRoleUserEntity.setCreatedBy(loggedUserEntity);
 			
 			roleUserEntityService.save(newRoleUserEntity);
 			
 			if(!Objects.isNull(roleUsers) && !roleUsers.isEmpty())
 			{
-				roleUsers.forEach( roleUser -> {
-					roleUserEntityService.delete(roleUser);
-				});
+				roleUsers.forEach( roleUser -> { roleUserEntityService.delete(roleUser); } );
 			}
 		}
 		
 		return userEntityCrudRepository.findById(newUserEntity.getId()).get();
+	}
+
+	@Override
+	public void delete(UserEntity userEntity) 
+	{
+		List<FileEntity> files = filerEntityService.findByCreatedBy(userEntity);
+		
+		files.forEach(file -> { file.setCreatedBy(null); });
+		
+		userEntityCrudRepository.delete(userEntity);
 	}
 }

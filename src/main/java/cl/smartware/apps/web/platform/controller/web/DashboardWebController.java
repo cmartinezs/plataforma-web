@@ -34,7 +34,15 @@ public class DashboardWebController implements ErrorController
 	public String dashboard()
 	{
 		LOGGER.info(MessageFormat.format("Showing dashboard for the user {0}", userLoggedService.getUserEntity().getUsername()));
-		return viewsComponentUtils.addThemeFolderToView("dashboard-index", userLoggedService.isAdmin());
+		
+		if(userLoggedService.isAdmin())
+		{
+			return viewsComponentUtils.addThemeFolderToView("dashboard-index", true);
+		}
+		else
+		{
+			return "redirect:/dashboard/modules";
+		}
 	}
 	
 	@Secured({ "ROLE_USER" })

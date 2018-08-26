@@ -31,8 +31,6 @@ public class UserForm {
 	
 	private String createdAt;
 	
-	private String createdBy;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -80,11 +78,5 @@ public class UserForm {
 	}
 	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
-	}
-	public String getCreatedBy() {
-		return createdBy;
-	}
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
 	}
 }

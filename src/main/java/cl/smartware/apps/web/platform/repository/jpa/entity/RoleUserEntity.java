@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -17,7 +16,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name = "role_user")
+@Table(name = "WP_ROLE_USER")
 public class RoleUserEntity implements EntityBase
 {
 	private static final long serialVersionUID = -2484249599382362060L;
@@ -27,10 +26,10 @@ public class RoleUserEntity implements EntityBase
 	{
 		private static final long serialVersionUID = -1599561875174685442L;
 		
-	    @Column(name = "user_id")  
+	    @Column(name = "USER_ID")  
 		private Integer userId;
 
-		@Column(name = "role_id")
+		@Column(name = "ROLE_ID")
 		private Integer roleId;
 
 		/**
@@ -65,12 +64,12 @@ public class RoleUserEntity implements EntityBase
 	@EmbeddedId
 	private RoleUserId roleUserId;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)  
+	@ManyToOne
+    @JoinColumn(name = "USER_ID", insertable = false, updatable = false)  
 	private UserEntity user;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "role_id", insertable = false, updatable = false)
+	@ManyToOne
+	@JoinColumn(name = "ROLE_ID", insertable = false, updatable = false)
 	private RoleEntity role;
 
 	@Column(name = "ACTIVE", nullable = false)
@@ -79,10 +78,6 @@ public class RoleUserEntity implements EntityBase
 	@Column(name = "CREATED_AT", updatable = false, nullable = false)
 	@CreationTimestamp
 	private Timestamp createdAt = new Timestamp(Calendar.getInstance().getTimeInMillis());
-
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@JoinColumn(name = "CREATED_BY")
-	private UserEntity createdBy;
 
 	public RoleUserId getRoleUserId() {
 		return roleUserId;
@@ -150,21 +145,5 @@ public class RoleUserEntity implements EntityBase
 	public void setCreatedAt(Timestamp createdAt)
 	{
 		this.createdAt = createdAt;
-	}
-
-	/**
-	 * @return the createdBy
-	 */
-	public UserEntity getCreatedBy()
-	{
-		return this.createdBy;
-	}
-
-	/**
-	 * @param createdBy the createdBy to set
-	 */
-	public void setCreatedBy(UserEntity createdBy)
-	{
-		this.createdBy = createdBy;
 	}
 }

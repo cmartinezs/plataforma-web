@@ -14,7 +14,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -89,6 +88,7 @@ public class UserWebController
 			model.remove("advertice");
 		}
 		
+		model.addAttribute("userAction", "/dashboard/users/save");
 		model.addAttribute("userTitle", "nuevo");
 		model.addAttribute("isNew", true);
 		model.addAttribute("userForm", new UserForm());
@@ -113,14 +113,14 @@ public class UserWebController
 			try 
 			{
 				userEntity = userEntityService.save(userForm, userLoggedService.getUserEntity());
-				ra.addFlashAttribute("editSuccess", "Cambios registrados con éxtio");
+				ra.addFlashAttribute("editSuccess", "Cambios registrados con éxito");
 				return "redirect:/dashboard/users/view/" + userEntity.getId();
 			} 
-			catch (RoleNotFoundUserEntityServiceException e) 
+			catch (RoleNotFoundUserEntityServiceException e)
 			{
 				model.addAttribute("editError", "El rol seleccionado no es válido");
 			} 
-			catch (UserNotFoundUserEntityServiceException e) 
+			catch (UserNotFoundUserEntityServiceException e)
 			{
 				model.addAttribute("editError", "El usuario seleccionado no es válido");
 			}
@@ -130,16 +130,18 @@ public class UserWebController
 		{
 			model.addAttribute("userTitle", "nuevo");
 			model.addAttribute("formTitle", "Registro de nuevo usuario");
-			model.addAttribute("isNew", false);
+			model.addAttribute("isNew", true);
 		}
 		else
 		{
 			model.addAttribute("userTitle", userForm.getUsername());
 			model.addAttribute("formTitle", "Modificación de usuario");
-			model.addAttribute("isNew", true);
+			model.addAttribute("isNew", false);
 		}
 
+		model.addAttribute("userAction", "/dashboard/users/save");
 		model.addAttribute("isEdit", true);
+		model.addAttribute("isDelete", false);
 		model.addAttribute("roleList", roleEntityService.findAll());
 
 		return viewsComponentUtils.addThemeFolderToView("user", true);
@@ -156,12 +158,14 @@ public class UserWebController
 			UserEntity userEntity = optionaUserEntity.get();
 			UserForm userForm = userEntityService.entityToForm(userEntity);
 			
+			model.addAttribute("userAction", "/dashboard/users/save");
 			model.addAttribute("userForm", userForm);
 			model.addAttribute("userTitle", userEntity.getUsername());
 			model.addAttribute("formTitle", "Visualización de usuario");
 			model.addAttribute("roleList", roleEntityService.findAll());
 			model.addAttribute("isEdit", false);
 			model.addAttribute("isNew", false);
+			model.addAttribute("isDelete", false);
 			
 			String flashEditSuccess = (String) ra.getFlashAttributes().get("editSuccess");
 			
@@ -192,12 +196,14 @@ public class UserWebController
 		{
 			UserEntity userEntity = optionaUserEntity.get();
 			UserForm userForm = userEntityService.entityToForm(userEntity);
+			model.addAttribute("userAction", "/dashboard/users/save");
 			model.addAttribute("userForm", userForm);
 			model.addAttribute("userTitle", userEntity.getUsername());
 			model.addAttribute("formTitle", "Modificación de usuario");
 			model.addAttribute("roleList", roleEntityService.findAll());
 			model.addAttribute("isEdit", true);
 			model.addAttribute("isNew", false);
+			model.addAttribute("isDelete", false);
 			
 			return viewsComponentUtils.addThemeFolderToView("user", true);
 		}
@@ -208,9 +214,52 @@ public class UserWebController
 	}
 	
 	@Secured({ "ROLE_ADMIN" })
-	@DeleteMapping("/delete/{id}")
-	public String delete() 
+	@GetMapping("/delete/{id}")
+	public String delete(@PathVariable("id") Integer id, ModelMap model,  RedirectAttributes ra) 
+	{		
+		Optional<UserEntity> optionaUserEntity = userEntityService.findById(id);
+		
+		if(optionaUserEntity.isPresent())
+		{
+			UserEntity userEntity = optionaUserEntity.get();
+			UserForm userForm = userEntityService.entityToForm(userEntity);
+			
+			model.addAttribute("userAction", "/dashboard/users/delete");
+			model.addAttribute("userForm", userForm);
+			model.addAttribute("userTitle", userEntity.getUsername());
+			model.addAttribute("formTitle", "Eliminación de usuario");
+			model.addAttribute("roleList", roleEntityService.findAll());
+			model.addAttribute("isEdit", false);
+			model.addAttribute("isNew", false);
+			model.addAttribute("isDelete", true);
+			
+			return viewsComponentUtils.addThemeFolderToView("user", true);
+		}
+		
+		ra.addFlashAttribute("advertice", MessageFormat.format("No existe el usuario solicitado con id. {0}", id));
+		
+		return "redirect:/dashboard/users/list";
+	}
+	
+	@Secured({ "ROLE_ADMIN" })
+	@PostMapping("/delete")
+	public String delete(ModelMap model, @ModelAttribute("userForm") UserForm userForm) 
 	{
-		return "";
+		Optional<UserEntity> optionaUserEntity = userEntityService.findById(userForm.getId());
+		
+		if(optionaUserEntity.isPresent())
+		{
+			UserEntity userEntity = optionaUserEntity.get();
+			userEntityService.delete(userEntity);
+			model.addAttribute("deleteSuccess", MessageFormat.format("Usuario {0} eliminado exitosamente.", userEntity.getUsername()));
+		}
+		else
+		{
+			model.addAttribute("deleteFail", MessageFormat.format("No se ha eliminado usuario con identificador {0}, no existe.", userForm.getId()));
+		}
+		
+		List<UserEntity> list = userEntityService.findAll();
+		model.addAttribute("userList", list);
+		return viewsComponentUtils.addThemeFolderToView("users", true);
 	}
 }

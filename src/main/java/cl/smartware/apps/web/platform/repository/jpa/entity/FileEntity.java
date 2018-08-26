@@ -21,7 +21,7 @@ import cl.smartware.apps.web.platform.repository.jpa.entity.enums.FileTypes;
 import cl.smartware.apps.web.platform.repository.jpa.entity.enums.ManagementTypes;
 
 @Entity
-@Table(name="file")
+@Table(name="WP_FILE")
 public class FileEntity implements EntityBase
 {
 	private static final long serialVersionUID = 2494111458883818575L;
@@ -41,7 +41,8 @@ public class FileEntity implements EntityBase
 	private String contentType;
 	
 	@Lob
-    @Column(name = "FILE", columnDefinition="BLOB")
+    //@Column(name = "CONTENT_FILE", columnDefinition="BLOB")
+	@Column(name = "CONTENT_FILE", columnDefinition="VARBINARY(MAX)")
     private byte[] file;
 	
 	@Column(name = "SIZE", nullable = false)
@@ -51,11 +52,13 @@ public class FileEntity implements EntityBase
 	private Integer anio;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "TYPE", length = 4, nullable = false, columnDefinition = "ENUM('PDF', 'XLS', 'XLSX')")
+	//@Column(name = "TYPE", length = 4, nullable = false, columnDefinition = "enum('PDF', 'XLS', 'XLSX')")
+	@Column(name = "TYPE", length = 4, nullable = false)
 	private FileTypes type;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "MANMAGEMENT", length = 10, nullable = false, columnDefinition = "ENUM('CONTABLE', 'RRHH', 'TESORERIA')")
+	//@Column(name = "MANMAGEMENT", length = 10, nullable = false, columnDefinition = "enum('CONTABLE', 'RRHH', 'TESORERIA')")
+	@Column(name = "MANMAGEMENT", length = 10, nullable = false)
 	private ManagementTypes management;
 	
 	@Column(name = "ENTERPRISE", length = 100, updatable = false, nullable = false)
@@ -66,7 +69,7 @@ public class FileEntity implements EntityBase
 	private Timestamp createdAt;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@JoinColumn(name = "CREATED_BY")
+	@JoinColumn(name = "CREATED_BY", nullable = true)
 	private UserEntity createdBy;
 
 	/**

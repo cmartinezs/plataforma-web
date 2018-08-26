@@ -114,40 +114,31 @@
 						<phase>package</phase>
 						<configuration>
 							<target>
+								<property name="final_dir" value="${basedir}/dist/${project.build.finalName}"/>
+								<delete dir="${final_dir}" verbose="true"/>
 								<echo>Creating exec file for ${project.build.finalName}.jar ....</echo>
-								<echo file="${basedir}/exec.cmd">
+								<echo file="${final_dir}/exec.cmd">
 @echo off
 chcp 65001
 java -jar -Dfile.encoding=UTF-8 ${project.build.finalName}.jar
 								</echo>
 								<echo>Copy files to distribution package ....</echo>
-								<copy todir="${basedir}/dist/config" overwrite="true"
-									flatten="true">
+								<copy todir="${final_dir}/config" overwrite="true" flatten="true">
 									<fileset dir="${basedir}">
 										<include name="config/*.*" />
 									</fileset>
 								</copy>
-								<copy todir="${basedir}/dist/files" overwrite="true"
-									flatten="true">
+								<copy todir="${final_dir}/files" overwrite="true" flatten="true">
 									<fileset dir="${basedir}">
 										<include name="files/*.*" />
 									</fileset>
 								</copy>
-								<copy todir="${basedir}/dist" overwrite="true"
-									flatten="true">
+								<copy todir="${final_dir}" overwrite="true" flatten="true">
 									<fileset dir="${basedir}">
 										<include name="target/*.jar" />
 									</fileset>
 								</copy>
-								<copy todir="${basedir}/dist" overwrite="true"
-									flatten="true">
-									<fileset dir="${basedir}">
-										<include name="exec.cmd" />
-									</fileset>
-								</copy>
-								<zip
-									destfile="${basedir}/dist/${project.build.finalName}.zip"
-									basedir="${basedir}/dist" excludes="dont*.*" />
+								<zip destfile="${final_dir}/${project.build.finalName}.zip" basedir="${final_dir}" excludes="dont*.*" />
 							</target>
 						</configuration>
 						<goals>

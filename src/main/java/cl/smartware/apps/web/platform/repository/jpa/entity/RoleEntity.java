@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +21,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name = "role")
+@Table(name = "WP_ROLE")
 public class RoleEntity implements EntityBase
 {
 	private static final long serialVersionUID = 328155766745861459L;
@@ -40,11 +41,7 @@ public class RoleEntity implements EntityBase
 	@CreationTimestamp
 	private Timestamp createdAt = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@JoinColumn(name = "CREATED_BY")
-	private UserEntity roleCreatedBy;
-
-	@OneToMany(mappedBy = "role", orphanRemoval = true)
+	@OneToMany(mappedBy = "role")
 	private List<RoleUserEntity> roleUsers = new ArrayList<>();
 
 	/**
@@ -113,23 +110,6 @@ public class RoleEntity implements EntityBase
 	public void setCreatedAt(Timestamp createdAt)
 	{
 		this.createdAt = createdAt;
-	}
-
-	/**
-	 * @return the roleCreatedBy
-	 */
-	public UserEntity getRoleCreatedBy()
-	{
-		return this.roleCreatedBy;
-	}
-
-	/**
-	 * @param roleCreatedBy
-	 *            the roleCreatedBy to set
-	 */
-	public void setRoleCreatedBy(UserEntity createdBy)
-	{
-		this.roleCreatedBy = createdBy;
 	}
 
 	/**
