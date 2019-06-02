@@ -40,7 +40,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -114,8 +114,9 @@
 						<phase>package</phase>
 						<configuration>
 							<target>
-								<property name="final_dir" value="${basedir}/dist/${project.build.finalName}"/>
-								<delete dir="${final_dir}" verbose="true"/>
+								<property name="final_dir"
+									value="${basedir}/dist/${project.build.finalName}" />
+								<delete dir="${final_dir}" verbose="true" />
 								<echo>Creating exec file for ${project.build.finalName}.jar ....</echo>
 								<echo file="${final_dir}/exec.cmd">
 @echo off
@@ -123,12 +124,14 @@ chcp 65001
 java -jar -Dfile.encoding=UTF-8 ${project.build.finalName}.jar
 								</echo>
 								<echo>Copy files to distribution package ....</echo>
-								<copy todir="${final_dir}/config" overwrite="true" flatten="true">
+								<copy todir="${final_dir}/config" overwrite="true"
+									flatten="true">
 									<fileset dir="${basedir}">
 										<include name="config/*.*" />
 									</fileset>
 								</copy>
-								<copy todir="${final_dir}/files" overwrite="true" flatten="true">
+								<copy todir="${final_dir}/files" overwrite="true"
+									flatten="true">
 									<fileset dir="${basedir}">
 										<include name="files/*.*" />
 									</fileset>
@@ -138,7 +141,8 @@ java -jar -Dfile.encoding=UTF-8 ${project.build.finalName}.jar
 										<include name="target/*.jar" />
 									</fileset>
 								</copy>
-								<zip destfile="${final_dir}/${project.build.finalName}.zip" basedir="${final_dir}" excludes="dont*.*" />
+								<zip destfile="${final_dir}/${project.build.finalName}.zip"
+									basedir="${final_dir}" excludes="dont*.*" />
 							</target>
 						</configuration>
 						<goals>

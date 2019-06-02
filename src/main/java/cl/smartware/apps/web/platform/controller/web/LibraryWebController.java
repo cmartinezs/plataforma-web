@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cl.smartware.apps.web.platform.controller.web.form.FileForm;
 import cl.smartware.apps.web.platform.controller.web.form.SearchForm;
@@ -57,8 +58,13 @@ public class LibraryWebController
 
 	@Secured({ "ROLE_USER" })
 	@GetMapping("/upload-file")
-	public String uploadFile(ModelMap model)
+	public String uploadFile(ModelMap model, RedirectAttributes ra)
 	{
+		if(ra.getFlashAttributes().containsKey("errorUploadFile"))
+		{
+			model.addAttribute("errorUploadFile", ra.getFlashAttributes().containsKey("errorUploadFile"));
+		}
+		
 		model.addAttribute("fileForm", new FileForm());
 		modelForUploadFile(model);
 		return viewsComponentUtils.addThemeFolderToView("upload-file");

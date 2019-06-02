@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import cl.smartware.apps.web.platform.controller.web.form.validator.password.ValidConfirmPassword;
 
-@ValidConfirmPassword()
+@ValidConfirmPassword
 public class UserForm {
 
 	private Integer id;

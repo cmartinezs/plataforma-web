@@ -25,9 +25,9 @@
 		      	</ol>
 		      	
 				<div th:if="${#strings.isEmpty(finishedSearch)}" class="card mx-auto mt-5">
+				  <form action="#" th:action="@{/dashboard/modules/library/search-file}" th:object="${searchForm}" method="POST">
 			      <div class="card-header" th:inline="text"><i class="fa fa-search"></i>&nbsp;[[${formTitle}]]</div>
 			      <div class="card-body">
-			      	<form action="#" th:action="@{/dashboard/modules/library/search-file}" th:object="${searchForm}" method="POST">
 			          <!-- FILENAME -->
 			          <div class="form-group row">
 			            <label for="fileName" class="col-sm-2 col-form-label">Nombre</label>
@@ -104,9 +104,11 @@
 							<div class="form-control alert alert-danger" id="enterpriseError" th:errors="*{enterprise}"></div>
 						</div>
 			          </div>
-			          <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;Buscar</button>
-			        </form>
 			      </div>
+			      <div class="card-footer">
+			      	<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;Buscar</button>
+			      </div>
+			      </form>
 				</div>
 				
 				<div th:if="${not #strings.isEmpty(finishedSearch)}" class="card mx-auto mt-5">
@@ -115,7 +117,7 @@
 		        	</div>
 		        	<div class="card-body">
 		          		<div class="table-responsive">
-		            		<table class="table table-bordered" id="dataTable">
+		            		<table class="table table-bordered" id="dataTable_searchFile">
 		              			<thead>
 					                <tr>
 					                  	<th>Nombre</th>
@@ -151,7 +153,7 @@
 				                  			<td th:text="${file.createdBy.username}">subido</td>
 				                  		</th:block>
 				                  		<th:block th:if="${file.createdBy == null}">
-				                  			<td>Sin credor registrado</td>
+				                  			<td class="alert alert-danger">Usuario eliminado</td>
 				                  		</th:block>
 				                  		<td th:text="${#dates.format(file.createdAt, 'dd-MM-yyyy HH:mm')}">creado</td>
 				                  		<td>
@@ -165,7 +167,10 @@
 				            	</tbody>
 				     		</table>
 		             	</div>
-		             	<a class="btn btn-primary" th:href="@{/dashboard/modules/library/search-file}"><i class="fa fa-refresh"></i>&nbsp;Volver a buscar</a>
+		             	
+		        	</div>
+		        	<div class="card-footer">
+		        		<a class="btn btn-primary" th:href="@{/dashboard/modules/library/search-file}"><i class="fa fa-refresh"></i>&nbsp;Volver a buscar</a>
 		        	</div>
 				</div>
 			</div>

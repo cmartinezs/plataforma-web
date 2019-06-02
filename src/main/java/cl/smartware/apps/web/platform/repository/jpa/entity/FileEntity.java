@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import cl.smartware.apps.web.platform.repository.jpa.entity.enums.FileTypes;
 import cl.smartware.apps.web.platform.repository.jpa.entity.enums.ManagementTypes;
@@ -41,6 +43,7 @@ public class FileEntity implements EntityBase
 	private String contentType;
 	
 	@Lob
+	@Fetch(FetchMode.SELECT)
     //@Column(name = "CONTENT_FILE", columnDefinition="BLOB")
 	@Column(name = "CONTENT_FILE", columnDefinition="VARBINARY(MAX)")
     private byte[] file;

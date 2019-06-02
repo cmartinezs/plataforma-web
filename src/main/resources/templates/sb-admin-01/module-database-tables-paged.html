@@ -54,8 +54,8 @@
 		          	</div>
 		        	<div class="card-body">
 		        		<div class="table-responsive">
-		            		<table class="table table-bordered">
-		              			<thead class="thead-dark">
+		            		<table class="table table-bordered" id="dataTable">
+		              			<thead>
 					                <tr>
 						                <th:block th:each="columnName: ${tableColumnNames}">
 						                  	<th th:text="${columnName}">Nombre de columna</th>
@@ -78,7 +78,7 @@
 		        		</div>
 			        </div>
 			        <div class="card-footer">
-            			<nav th:if="${totalPage > 0}">
+            			<nav th:if="${totalPage > 0}" class="paginationNav">
 						  <ul class="pagination pagination-mg">
 
 						    <li class="page-item" th:classappend="${page == 1 ? 'disabled' : ''}">

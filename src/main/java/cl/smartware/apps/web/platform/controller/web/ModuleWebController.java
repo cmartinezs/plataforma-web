@@ -61,7 +61,7 @@ public class ModuleWebController
 		
 		if(webPlatformModule.equals(WebPlatformModules.UNKNOWN))
 		{
-			return "/dashboard/modules";
+			return "redirect:/dashboard/modules";
 		}
 		
 		String moduleName = webPlatformModule.getModuleName();
